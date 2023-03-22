@@ -1,0 +1,88 @@
+[
+  {
+    "name": "hvssw0",
+    "flood_vlans": [
+      "set",
+      []
+    ],
+    "auto_attach": [
+      "set",
+      []
+    ],
+    "ports": [
+      "set",
+      [
+        [
+          "uuid",
+          "187deb8e-13c7-49b9-a785-8e3c7e7abdae"
+        ],
+        [
+          "uuid",
+          "88513ba2-70b0-49d3-9126-125e904cdd4d"
+        ],
+        [
+          "uuid",
+          "91a503e4-01b6-479e-b8ed-c3f576e7ee40"
+        ]
+      ]
+    ],
+    "stp_enable": false,
+    "fail_mode": [
+      "set",
+      []
+    ],
+    "rstp_enable": false,
+    "rstp_status": [
+      "map",
+      []
+    ],
+    "flow_tables": [
+      "map",
+      []
+    ],
+    "_version": [
+      "uuid",
+      "1be6dbb5-8095-49ae-8629-aca23306eae6"
+    ],
+    "netflow": [
+      "set",
+      []
+    ],
+    "datapath_type": "",
+    "controller": [
+      "set",
+      []
+    ],
+    "other_config": [
+      "map",
+      []
+    ],
+    "status": [
+      "map",
+      []
+    ],
+    "ipfix": [
+      "set",
+      []
+    ],
+    "external_ids": [
+      "map",
+      []
+    ],
+    "datapath_id": "00006a5e469a884a",
+    "mirrors": [
+      "set",
+      []
+    ],
+    "mcast_snooping_enable": false,
+    "datapath_version": "<unknown>",
+    "sflow": [
+      "set",
+      []
+    ],
+    "protocols": [
+      "set",
+      []
+    ]
+  }
+]
