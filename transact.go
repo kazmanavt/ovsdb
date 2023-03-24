@@ -22,10 +22,3 @@ func (c *Client) Transact(ctx context.Context, db string, tr transact.Transactio
 	}
 	return tr.Error()
 }
-func (c *Client) CancelTransact(ctx context.Context, id string) error {
-	err := c.Notify(ctx, "cancel", id)
-	if err != nil {
-		c.DropPending(id)
-	}
-	return err
-}

@@ -23,15 +23,6 @@ func (i *insertOp) Validate(dSch *schema.DbSchema) error {
 	return nil
 }
 
-//type InsertResult struct {
-//	Uuid types.UUID `json:"uuid"`
-//}
-//
-//func (ri *InsertResult) UnmarshalJSON(data []byte) error {
-//	type TMP InsertResult
-//	return json.Unmarshal(data, (*TMP)(ri))
-//}
-
 func (t *transaction) Insert(row schema.Row, uuid ...string) Transaction {
 	uu := new(string)
 	if len(uuid) > 0 {

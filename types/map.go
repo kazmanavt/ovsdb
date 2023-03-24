@@ -78,29 +78,29 @@ func (m *Map[K, V]) String() string {
 	return sb.String()
 }
 
-func (m *Map[K, V]) Update2(_m2 any) error {
-	m2, ok := _m2.(*Map[K, V])
+func (m Map[K, V]) Update2(_m2 any) error {
+	m2, ok := _m2.(Map[K, V])
 	if !ok {
 		return fmt.Errorf("invalid type for Map update2")
 	}
 	if m2 == nil {
 		return nil
 	}
-	for k2, v2 := range *m2 {
+	for k2, v2 := range m2 {
 		found := false
-		for k, v := range *m {
+		for k, v := range m {
 			if k2 == k {
 				found = true
 				if v2 == v {
-					delete(*m, k)
+					delete(m, k)
 				} else {
-					(*m)[k] = v2
+					(m)[k] = v2
 				}
 				break
 			}
 		}
 		if !found {
-			(*m)[k2] = v2
+			(m)[k2] = v2
 		}
 	}
 	return nil

@@ -11,28 +11,32 @@ import (
 
 type DB interface {
 	fmt.Stringer
+
 	// Schema returns the schema of the database.
 	Schema() *schema.DbSchema
+
 	// TableSchema returns the schema of the table.
 	// it panics if the table does not exist.
 	TableSchema(tName string) *schema.TableSchema
-	// Table returns a map of UUIDs to rows in the table.
-	// it panics if the table does not exist.
-	//Table(tName string) map[string]schema.Row
 
 	// TableLen returns the number of rows in the table.
 	// it panics if the table does not exist.
 	TableLen(tName string) int
+
 	// TableRow returns the row with the given UUID in the table.
 	// it returns nil if the row does not exist.
 	TableRow(tName string, uuid types.UUID) schema.Row
 	TableRowS(tName string, uuid string) schema.Row
+
+	// Get returns the value of the column in the row.
 	Get(tName string, uuid types.UUID, cName string) any
 	GetS(tName string, uuid string, cName string) any
+
 	// FindRecord returns a list of UUIDs of rows in the table that match the conditions.
 	// it returns an empty list if no rows match the conditions.
 	FindRecord(tName string, where []types.Condition) []string
-	// Update2 applies the updates2 to the database.
+
+	// Update2 applies the updates2 received as result of monitor_cond or monitor_cond to current database.
 	Update2(upd2 monitor.Updates2) error
 }
 
@@ -42,14 +46,6 @@ type dbImpl struct {
 	tNames []string
 	mu     sync.RWMutex
 	tables map[string]*tableImpl
-}
-
-func (d *dbImpl) TableLen(tName string) int {
-	t, ok := d.tables[tName]
-	if !ok {
-		panic(fmt.Sprintf("table %q does not exist", tName))
-	}
-	return len(t.rows)
 }
 
 func NewDB(sch *schema.DbSchema) DB {
@@ -119,17 +115,12 @@ func (d *dbImpl) TableSchema(tName string) *schema.TableSchema {
 	return tSch
 }
 
-// Table returns a map of UUIDs to rows in the table.
-// it panics if the table does not exist.
-func (d *dbImpl) Table(tName string) map[string]schema.Row {
-	d.mu.RLock()
-	defer d.mu.RUnlock()
+func (d *dbImpl) TableLen(tName string) int {
 	t, ok := d.tables[tName]
 	if !ok {
-		// FIXME: panic? really?
-		panic(fmt.Sprintf("table %q not found", tName))
+		panic(fmt.Sprintf("table %q does not exist", tName))
 	}
-	return t.rows
+	return len(t.rows)
 }
 
 func (d *dbImpl) TableRow(tName string, uuid types.UUID) schema.Row {

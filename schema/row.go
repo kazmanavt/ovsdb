@@ -35,8 +35,7 @@ type Row interface {
 	TableSchema() *TableSchema
 	// Get returns the value of the column cName of table Row.
 	// If the column is not set, the default value is returned.
-	// If the column is not in the table, nil is returned.
-	// The returned value is a pointer to the type of the column.
+	// If the column is not in the table, it panics.
 	Get(cName string) any
 	Set(cName string, value any)
 	Update2(diff Row) error
@@ -45,11 +44,13 @@ type Row interface {
 
 type rowImpl struct {
 	tSch *TableSchema
-	mu sync.RWMutex
+	mu *sync.RWMutex
 	row  map[string]any
 }
 
 func (r rowImpl) MarshalJSON() ([]byte, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
 	return json.Marshal(r.row)
 }
 
@@ -92,6 +93,11 @@ func (r *rowImpl) TableSchema() *TableSchema {
 func (r *rowImpl) Get(cName string) any {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
+	return r.get(cName)
+}
+
+// get is the internal implementation of Get. (unlocked)
+func (r *rowImpl) get(cName string) any {
 	value, ok := r.row[cName]
 	if !ok {
 		if _, ok := r.tSch.Columns[cName]; !ok {
@@ -108,6 +114,11 @@ func (r *rowImpl) Get(cName string) any {
 func (r *rowImpl) Set(cName string, value any) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
+	r.set(cName, value)
+}
+
+// set is the internal implementation of Set. (unlocked)
+func (r *rowImpl) set(cName string, value any) {
 	if reflect.ValueOf(value).Kind() == reflect.Ptr {
 		value = reflect.ValueOf(value).Elem().Interface()
 	}
@@ -130,10 +141,9 @@ func (r *rowImpl) Update2(_diff Row) error {
 		return fmt.Errorf("diff bad Row implementation")
 	}
 	for cName, ucVal := range diff.row {
-		// FIXME !!!!!!!!!!
-		cVal, ok := r.Get(cName).(types.Updater2)
+		cVal, ok := r.get(cName).(types.Updater2)
 		if !ok {
-			r.Set(cName, ucVal)
+			r.set(cName, ucVal)
 			continue
 		}
 		if err := cVal.Update2(ucVal); err != nil {
@@ -155,7 +165,7 @@ func (r *rowImpl) Match(where []types.Condition) bool {
 		if err := cSch.ValidateCond(cond.GetOp(), cond.GetValue()); err != nil {
 			return false
 		}
-		if !cond.Check(r.Get(cond.GetColumn())) {
+		if !cond.Check(r.get(cond.GetColumn())) {
 			return false
 		}
 	}

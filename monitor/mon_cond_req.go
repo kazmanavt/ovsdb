@@ -20,14 +20,7 @@ func NewMonCondReqs(ds *schema.DbSchema) MonCondReqs {
 // It is used to pass the requests to the Monitor method of the Client
 type monCondReqs struct {
 	monReqs
-	//sch              *DbSchema                 // DbSchema is used to validate the requests in Add function
-	//tColNames        map[string]map[string]int // tColNames is used to validate the requests in Add function (garantee no duplicate column names)
-	//reqs             map[string][]MonReq       // reqs is used to store the requests
-	//hasInitial, hasUpdates bool
-
-	//sch       *DbSchema                 // DbSchema is used to validate the requests in Add function
-	//tColNames map[string]map[string]int // tColNames is used to validate the requests in Add function (garantee no duplicate column names)
-	reqs map[string][]MonCondReq // reqs is used to store the requests
+	reqs map[string][]MonCondReq
 }
 
 func (mcrs *monCondReqs) MarshalJSON() ([]byte, error) {
@@ -94,6 +87,7 @@ type MonCondReq struct {
 func (mr *MonCondReq) GetColumns() []string {
 	return mr.Columns
 }
+
 func (mr *MonCondReq) GetSelect() *Select {
 	return mr.Select
 }

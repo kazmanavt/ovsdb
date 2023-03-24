@@ -3,6 +3,7 @@ package schema
 import (
 	"fmt"
 	"reflect"
+	"sync"
 )
 
 // TableSchema represents a table schema, according to RFC7047.
@@ -32,6 +33,7 @@ func (ts *TableSchema) NewRow(args ...any) Row {
 	r :=  rowImpl{
 		tSch: ts,
 		row:  make(map[string]any),
+		mu:  &sync.RWMutex{},
 	}
 
 	for i := 0; i < len(args); i += 2 {

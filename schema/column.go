@@ -20,45 +20,10 @@ type ColumnSchema struct {
 	Mutable   bool       `json:"mutable,omitempty"`   // true if the column is mutable
 }
 
-//func (cs *ColumnSchema) ValidateOp(op string) error {
-//	var err error
-//	switch cs.Type.GetKind() {
-//	case "string", "boolean", "uuid":
-//		if strings.Contains("includes!==excludes", op) {
-// 			err = fmt.Errorf("[%s] operation invalid for %s", op, cs.Type.GetKind())
-//		}
-//	case "set":
-//		if strings.Contains("<=>=", op) {
-//
-//		}
-//		if op != "==" && op != "!=" && op != "includes" && op != "excludes" {
-//			err = fmt.Errorf("[%s] operation infalid for set", op)
-//		}
-//	case "map":
-//		if op != "==" && op != "!=" && op != "includes" && op != "excludes" {
-//			err = fmt.Errorf("[%s] operation infalid for map", op)
-//		}
-//	}
-//	return err
-//}
-
 // ValidateCond validates the condition for a column
 func (cs *ColumnSchema) ValidateCond(op string, value any) (err error) {
-	//if namedSet, ok := value.(types.Set[types.NamedUUID]); ok {
-	//	var uuidSet types.Set[types.UUID]
-	//	for _, named := range namedSet {
-	//		uuidSet = append(uuidSet, types.UUID(named))
-	//	}
-	//	value = uuidSet
-	//} else if named , ok := value.(types.NamedUUID); ok {
-	//	value = types.UUID(named)
-	//}
-	// infer appropriate operations for the column type
 	ops := "includes!==excludes"
 	kind := cs.Type.GetKind()
-	//if strings.Contains("integereal", kind) {
-	//	ops = "<=>=" + ops
-	//}
 	// normalize value for Set[int|float64]
 	if v, ok := value.(int); kind == "Set[integer]" && *cs.Type.Min == 0 && *cs.Type.Max.(*int) == 1 && ok {
 		ops = "<=>=" + ops

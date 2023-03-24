@@ -10,15 +10,11 @@ import (
 func NewTransaction(sch *schema.DbSchema) Transaction {
 	return &transaction{
 		sch:    sch,
-		uuids:  make(map[string]int),
 		txnSet: make([]operation, 0),
 		resp:   make([]*Result, 0),
 	}
 }
 
-//	type operation interface {
-//		__()
-//	}
 type Transaction interface {
 	Insert(row schema.Row, uuid ...string) Transaction
 	Select(tName string, where []types.Condition, columns []string) Transaction
@@ -39,7 +35,6 @@ type Transaction interface {
 }
 type transaction struct {
 	sch    *schema.DbSchema
-	uuids  map[string]int
 	txnSet []operation
 	resp   []*Result
 }
@@ -89,26 +84,3 @@ func (t *transaction) Error() error {
 	}
 	return nil
 }
-
-//type response interface {
-//	UnmarshalJSON([]byte) error
-//}
-
-// EmptyResult is a dummy result for operations that don't return anything.
-//type EmptyResult struct {
-//}
-
-//func (e *EmptyResult) UnmarshalJSON(data []byte) error {
-//	*e = EmptyResult{}
-//	return nil
-//}
-
-// CounterResult is a result for operations that return a count of affected rows.
-//type CounterResult struct {
-//	Count int `json:"count"`
-//}
-
-//func (c *CounterResult) UnmarshalJSON(data []byte) error {
-//	type TMP CounterResult
-//	return json.Unmarshal(data, (*TMP)(c))
-//}

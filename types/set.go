@@ -53,25 +53,25 @@ func (s *Set[T]) String() string {
 	return sb.String()
 }
 
-func (s *Set[T]) Update2(_s2 any) error {
-	s2, ok := _s2.(*Set[T])
+func (s Set[T]) Update2(_s2 any) error {
+	s2, ok := _s2.(Set[T])
 	if !ok {
 		return fmt.Errorf("unsuitable Set update2")
 	}
 	if s2 == nil {
 		return nil
 	}
-	for _, v2 := range *s2 {
+	for _, v2 := range s2 {
 		found := false
-		for i, v := range *s {
+		for i, v := range s {
 			if v == v2 {
 				found = true
-				*s = append((*s)[:i], (*s)[i+1:]...)
+				s = append((s)[:i], (s)[i+1:]...)
 				break
 			}
 		}
 		if !found {
-			*s = append(*s, v2)
+			s = append(s, v2)
 		}
 	}
 	return nil

@@ -28,6 +28,8 @@ func (t *tableImpl) findRecord(where []types.Condition) []string {
 	return result
 }
 
+
+// apply updates
 func (t *tableImpl) update2(upd2 monitor.TableUpdate2) error {
 	t.mu.Lock()
 	defer t.mu.Unlock()

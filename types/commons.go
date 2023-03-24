@@ -30,14 +30,6 @@ type Updater2 interface {
 	Update2(other any) error
 }
 
-//func IsAtomicType(t any) bool {
-//	switch t.(type) {
-//	case string, int, bool, float64, UUID, NamedUUID:
-//		return true
-//	}
-//	return false
-//}
-
 func IsSetType(t any) bool {
 	switch t.(type) {
 	case Set[string], Set[int], Set[bool], Set[float64], Set[UUID], Set[NamedUUID]:
@@ -58,7 +50,3 @@ func IsMapType(t any) bool {
 	}
 	return false
 }
-
-//func IsBaseType(t any) bool {
-//	return IsAtomicType(t) || IsSetType(t) || IsMapType(t)
-//}

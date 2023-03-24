@@ -17,9 +17,8 @@ func NewMonReqs(ds *schema.DbSchema) MonReqs {
 // monReqs is used to store the monitor requests
 // It is used to pass the requests to the Monitor method of the Client
 type monReqs struct {
-	sch *schema.DbSchema // DbSchema is used to validate the requests in Add function
-	//tColNames        map[string]map[string]int // tColNames is used to validate the requests in Add function (garantee no duplicate column names)
-	reqs                   map[string][]MonReq // reqs is used to store the requests
+	sch *schema.DbSchema // DbSchema is used to validate the requests in Validate function
+	reqs                   map[string][]MonReq
 	hasInitial, hasUpdates bool
 }
 
