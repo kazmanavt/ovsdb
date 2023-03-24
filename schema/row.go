@@ -146,8 +146,10 @@ func (r *rowImpl) Update2(_diff Row) error {
 			r.set(cName, ucVal)
 			continue
 		}
-		if err := cVal.Update2(ucVal); err != nil {
+		if updatedVal, err := cVal.Update2(ucVal); err != nil {
 			return err
+		} else {
+			r.set(cName, updatedVal)
 		}
 	}
 	return nil

@@ -53,13 +53,13 @@ func (s *Set[T]) String() string {
 	return sb.String()
 }
 
-func (s Set[T]) Update2(_s2 any) error {
+func (s Set[T]) Update2(_s2 any) (any, error) {
 	s2, ok := _s2.(Set[T])
 	if !ok {
-		return fmt.Errorf("unsuitable Set update2")
+		return nil, fmt.Errorf("unsuitable Set update2")
 	}
 	if s2 == nil {
-		return nil
+		return s, nil
 	}
 	for _, v2 := range s2 {
 		found := false
@@ -74,5 +74,5 @@ func (s Set[T]) Update2(_s2 any) error {
 			s = append(s, v2)
 		}
 	}
-	return nil
+	return s, nil
 }

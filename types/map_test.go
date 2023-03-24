@@ -147,6 +147,6 @@ func BenchmarkMap_MarshalJSON(b *testing.B) {
 
 func TestMap_Update(t *testing.T) {
 	m := Map[string, int]{"foo": 1, "bar": 2}
-	m.Update2(&Map[string, int]{"foo": 1, "bar": 4, "qux": 5})
+	m.Update2(Map[string, int]{"foo": 1, "bar": 4, "qux": 5})
 	assert.Equal(t, Map[string, int]{"bar": 4, "qux": 5}, m)
 }

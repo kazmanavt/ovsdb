@@ -78,13 +78,13 @@ func (m *Map[K, V]) String() string {
 	return sb.String()
 }
 
-func (m Map[K, V]) Update2(_m2 any) error {
+func (m Map[K, V]) Update2(_m2 any) (any, error) {
 	m2, ok := _m2.(Map[K, V])
 	if !ok {
-		return fmt.Errorf("invalid type for Map update2")
+		return nil, fmt.Errorf("invalid type for Map update2")
 	}
 	if m2 == nil {
-		return nil
+		return m, nil
 	}
 	for k2, v2 := range m2 {
 		found := false
@@ -103,5 +103,5 @@ func (m Map[K, V]) Update2(_m2 any) error {
 			(m)[k2] = v2
 		}
 	}
-	return nil
+	return m, nil
 }

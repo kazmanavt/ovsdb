@@ -124,6 +124,12 @@ func BenchmarkSet_MarshalJSON(b *testing.B) {
 
 func TestSet_Update(t *testing.T) {
 	s := Set[UUID]{"uuid-123", "uuid-456"}
-	s.Update2(&Set[UUID]{"uuid-456", "uuid-789"})
+	s.Update2(Set[UUID]{"uuid-456", "uuid-789"})
 	assert.ElementsMatch(t, Set[UUID]{"uuid-123", "uuid-789"}, s)
+
+	r := map[string]any{"test": s}
+
+	x := r["test"].(Updater2)
+	r["test"], _ = x.Update2(Set[UUID]{"uuid-456", "uuid-789"})
+	assert.ElementsMatch(t, Set[UUID]{"uuid-123", "uuid-456"}, r["test"])
 }

@@ -27,7 +27,7 @@ type BaseType interface {
 }
 
 type Updater2 interface {
-	Update2(other any) error
+	Update2(other any) (any, error)
 }
 
 func IsSetType(t any) bool {
