@@ -7,6 +7,7 @@ import (
 	"github.com/kazmanavt/ovsdb/types"
 	"strings"
 	"sync"
+	"time"
 )
 
 type DB interface {
@@ -38,14 +39,19 @@ type DB interface {
 
 	// Update2 applies the updates2 received as result of monitor_cond or monitor_cond to current database.
 	Update2(upd2 monitor.Updates2) error
+
+	// WaitRevision waits until the database is updated to the given revision.
+	// it returns true if the database is updated to the given revision. Otherwise, it returns false.
+	WaitRevision(rev int, timeout time.Duration) bool
 }
 
 type dbImpl struct {
-	name   string
-	sch    *schema.DbSchema
-	tNames []string
-	mu     sync.RWMutex
-	tables map[string]*tableImpl
+	name    string
+	sch     *schema.DbSchema
+	tNames  []string
+	mu      sync.RWMutex
+	tables  map[string]*tableImpl
+	updated chan struct{}
 }
 
 func NewDB(sch *schema.DbSchema) DB {
@@ -65,10 +71,11 @@ func NewDB(sch *schema.DbSchema) DB {
 		}
 	}
 	return &dbImpl{
-		name:   sch.Name,
-		sch:    sch,
-		tNames: tNames,
-		tables: tables,
+		name:    sch.Name,
+		sch:     sch,
+		tNames:  tNames,
+		tables:  tables,
+		updated: make(chan struct{}, 1),
 	}
 }
 
@@ -133,13 +140,14 @@ func (d *dbImpl) TableRow(tName string, uuid types.UUID) schema.Row {
 	row, ok := t.rows[string(uuid)]
 	return row
 }
+
 func (d *dbImpl) TableRowS(tName, uuid string) schema.Row {
 	return d.TableRow(tName, types.UUID(uuid))
 }
-
 func (d *dbImpl) Get(tName string, uuid types.UUID, cName string) any {
 	return d.TableRow(tName, uuid).Get(cName)
 }
+
 func (d *dbImpl) GetS(tName, uuid, cName string) any {
 	return d.TableRow(tName, types.UUID(uuid)).Get(cName)
 }
@@ -158,6 +166,12 @@ func (d *dbImpl) FindRecord(tName string, where []types.Condition) []string {
 func (d *dbImpl) Update2(upd2 monitor.Updates2) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
+	defer func() {
+		select {
+		case d.updated <- struct{}{}:
+		default:
+		}
+	}()
 	for tName, tUpd2 := range upd2 {
 		if t, ok := d.tables[tName]; ok {
 			if err := t.update2(tUpd2); err != nil {
@@ -166,4 +180,25 @@ func (d *dbImpl) Update2(upd2 monitor.Updates2) error {
 		}
 	}
 	return nil
+}
+
+func (d *dbImpl) WaitRevision(rev int, timeout time.Duration) bool {
+	uuids := d.FindRecord("Open_vSwitch", nil)
+	if len(uuids) != 0 {
+		return true
+	}
+
+	timeoutTimer := time.NewTimer(timeout)
+	for {
+		select {
+		case <-d.updated:
+			if d.GetS("Open_vSwitch", uuids[0], "cur_cfg").(int) >= rev {
+				timeoutTimer.Stop()
+				return true
+			}
+			continue
+		case <-timeoutTimer.C:
+			return false
+		}
+	}
 }
