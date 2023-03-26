@@ -3,7 +3,7 @@ module github.com/kazmanavt/ovsdb
 go 1.19
 
 require (
-	github.com/kazmanavt/jsonrpc v0.0.0-20230322133418-3ebd493efb1b
+	github.com/kazmanavt/jsonrpc v0.0.0-20230323134131-04fa770575c2
 	github.com/satori/go.uuid v1.2.0
 	github.com/stretchr/testify v1.8.2
 	go.uber.org/zap v1.24.0
@@ -12,7 +12,7 @@ require (
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	go.uber.org/atomic v1.7.0 // indirect
-	go.uber.org/multierr v1.6.0 // indirect
+	go.uber.org/atomic v1.10.0 // indirect
+	go.uber.org/multierr v1.10.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
