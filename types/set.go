@@ -76,3 +76,12 @@ func (s Set[T]) Update2(_s2 any) (any, error) {
 	}
 	return s, nil
 }
+
+func (s Set[T]) Has(_val T) bool {
+	for _, val := range s {
+		if val == _val {
+			return true
+		}
+	}
+	return false
+}
