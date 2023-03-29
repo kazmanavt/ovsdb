@@ -13,6 +13,11 @@ import (
 type DB interface {
 	fmt.Stringer
 
+	// RLock locks the database for reading.
+	RLock()
+	// RUnlock unlocks the database for reading.
+	RUnlock()
+
 	// Schema returns the schema of the database.
 	Schema() *schema.DbSchema
 
@@ -79,6 +84,14 @@ func NewDB(sch *schema.DbSchema) DB {
 	}
 }
 
+func (d *dbImpl) RLock() {
+	d.mu.RLock()
+}
+
+func (d *dbImpl) RUnlock() {
+	d.mu.RUnlock()
+}
+
 func (d *dbImpl) String() string {
 	d.mu.RLock()
 	defer d.mu.RUnlock()
@@ -123,6 +136,8 @@ func (d *dbImpl) TableSchema(tName string) *schema.TableSchema {
 }
 
 func (d *dbImpl) TableLen(tName string) int {
+	d.mu.RLock()
+	defer d.mu.RUnlock()
 	t, ok := d.tables[tName]
 	if !ok {
 		panic(fmt.Sprintf("table %q does not exist", tName))
