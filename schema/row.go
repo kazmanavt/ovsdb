@@ -37,8 +37,12 @@ type Row interface {
 	// If the column is not set, the default value is returned.
 	// If the column is not in the table, it panics.
 	Get(cName string) any
+	// Set sets the value of the column cName of table Row to value.
+	// If the column is not in the table, or type of value violate schema, Set will panic.
 	Set(cName string, value any)
+	// Update2 updates the row with the modify part of tables-update2 response.
 	Update2(diff Row) error
+	// Match returns true if the row matches the conditions.
 	Match(where []types.Condition) bool
 }
 
@@ -104,13 +108,12 @@ func (r *rowImpl) get(cName string) any {
 			// early panic
 			panic(fmt.Errorf("schema violated: table %q doesn't have column %q", r.tSch.Name, cName))
 		}
-		value = r.tSch.Columns[cName].GetDefaultValue()
+		r.row[cName] = r.tSch.Columns[cName].GetDefaultValue()
+		value = r.row[cName]
 	}
 	return value
 }
 
-// Set sets the value of the column cName of table Row to value.
-// If the column is not in the table, or type of value violate schema, Set will panic.
 func (r *rowImpl) Set(cName string, value any) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -132,7 +135,6 @@ func (r *rowImpl) set(cName string, value any) {
 	r.row[cName] = value
 }
 
-// Update2 updates the row with the modify part of tables-update2 response.
 func (r *rowImpl) Update2(_diff Row) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -155,7 +157,6 @@ func (r *rowImpl) Update2(_diff Row) error {
 	return nil
 }
 
-// Match returns true if the row matches the conditions.
 func (r *rowImpl) Match(where []types.Condition) bool {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
