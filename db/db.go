@@ -199,8 +199,8 @@ func (d *dbImpl) Update2(upd2 monitor.Updates2) error {
 
 func (d *dbImpl) WaitRevision(rev int, timeout time.Duration) bool {
 	uuids := d.FindRecord("Open_vSwitch", nil)
-	if len(uuids) != 0 {
-		return true
+	if len(uuids) != 1 {
+		return false
 	}
 
 	timeoutTimer := time.NewTimer(timeout)
