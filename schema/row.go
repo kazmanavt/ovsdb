@@ -143,6 +143,13 @@ func (r *rowImpl) Update2(_diff Row) error {
 		return fmt.Errorf("diff bad Row implementation")
 	}
 	for cName, ucVal := range diff.row {
+		// special case for set of 0/1
+		cSch, ok := r.tSch.Columns[cName]
+		if ok && *cSch.Type.Min == 0 && *cSch.Type.Max.(*int) == 1 {
+			r.set(cName, ucVal)
+			continue
+		}
+		// usual path
 		cVal, ok := r.get(cName).(types.Updater2)
 		if !ok {
 			r.set(cName, ucVal)

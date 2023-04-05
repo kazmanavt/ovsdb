@@ -1,0 +1,355 @@
+{
+  "Port": {
+    "bd2bcc5d-ff61-4c1a-9a05-80d8f062aa08": {
+      "initial": {
+        "name": "hujak",
+        "interfaces": [
+          "uuid",
+          "02d352b1-140e-43b2-a4d9-a59bdc98d850"
+        ]
+      }
+    },
+    "9f96578b-aa64-4510-a424-05cb0b107410": {
+      "initial": {
+        "name": "eth4",
+        "interfaces": [
+          "uuid",
+          "3963cb14-04a8-460b-956d-fcfa989dc3b2"
+        ]
+      }
+    },
+    "0286abdf-addb-4edb-b8c3-ef0e20d05ec5": {
+      "initial": {
+        "name": "sop2",
+        "interfaces": [
+          "uuid",
+          "94ea7727-4d6d-4974-8c81-f287e47a5683"
+        ],
+        "tag": 9
+      }
+    },
+    "c0e1662a-a5ea-464b-bf54-d8818367fba5": {
+      "initial": {
+        "name": "eth0",
+        "interfaces": [
+          "uuid",
+          "04672ba5-710b-4f4f-958b-7058775f7742"
+        ]
+      }
+    },
+    "9c98631a-d939-4c53-a784-c08e75f95c3a": {
+      "initial": {
+        "name": "sop233",
+        "interfaces": [
+          "uuid",
+          "d45acfac-3fe5-4a3b-91fd-881505d055ed"
+        ],
+        "tag": 901
+      }
+    },
+    "88513ba2-70b0-49d3-9126-125e904cdd4d": {
+      "initial": {
+        "name": "sys0",
+        "interfaces": [
+          "uuid",
+          "8f5949cf-53d1-479b-af14-e44959d98967"
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_type",
+              "sysx"
+            ]
+          ]
+        ]
+      }
+    },
+    "a29aedca-83a8-4c28-9b74-cb1209963d95": {
+      "initial": {
+        "name": "eth5",
+        "interfaces": [
+          "uuid",
+          "51c8bdec-4ea8-429e-8358-5a7222ac82b9"
+        ]
+      }
+    },
+    "91a503e4-01b6-479e-b8ed-c3f576e7ee40": {
+      "initial": {
+        "name": "hvssw0",
+        "interfaces": [
+          "uuid",
+          "0774bf98-11e5-49b4-9d74-f7a5dcb0acbb"
+        ]
+      }
+    },
+    "d8de8f3a-e510-43af-b96c-253b6036ae08": {
+      "initial": {
+        "name": "HOMOK",
+        "interfaces": [
+          "uuid",
+          "43a87f1f-6443-4155-b09b-abc2039a37cc"
+        ]
+      }
+    }
+  },
+  "Interface": {
+    "8f5949cf-53d1-479b-af14-e44959d98967": {
+      "initial": {
+        "name": "sys0",
+        "ofport": 2,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "type": "internal"
+      }
+    },
+    "02d352b1-140e-43b2-a4d9-a59bdc98d850": {
+      "initial": {
+        "name": "hujak",
+        "ofport": 65534,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "type": "internal"
+      }
+    },
+    "3963cb14-04a8-460b-956d-fcfa989dc3b2": {
+      "initial": {
+        "name": "eth4",
+        "ofport": 1,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "virtio_net"
+            ],
+            [
+              "driver_version",
+              "1.0.0"
+            ],
+            [
+              "firmware_version",
+              ""
+            ]
+          ]
+        ]
+      }
+    },
+    "0774bf98-11e5-49b4-9d74-f7a5dcb0acbb": {
+      "initial": {
+        "name": "hvssw0",
+        "ofport": 65534,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "type": "internal"
+      }
+    },
+    "d45acfac-3fe5-4a3b-91fd-881505d055ed": {
+      "initial": {
+        "name": "sop233",
+        "ofport": 2,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "type": "internal"
+      }
+    },
+    "94ea7727-4d6d-4974-8c81-f287e47a5683": {
+      "initial": {
+        "name": "sop2",
+        "ofport": 2,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "type": "internal"
+      }
+    },
+    "43a87f1f-6443-4155-b09b-abc2039a37cc": {
+      "initial": {
+        "name": "HOMOK",
+        "ofport": 65534,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "type": "internal"
+      }
+    },
+    "51c8bdec-4ea8-429e-8358-5a7222ac82b9": {
+      "initial": {
+        "name": "eth5",
+        "ofport": 1,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "virtio_net"
+            ],
+            [
+              "driver_version",
+              "1.0.0"
+            ],
+            [
+              "firmware_version",
+              ""
+            ]
+          ]
+        ]
+      }
+    },
+    "04672ba5-710b-4f4f-958b-7058775f7742": {
+      "initial": {
+        "name": "eth0",
+        "ofport": 1,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "virtio_net"
+            ],
+            [
+              "driver_version",
+              "1.0.0"
+            ],
+            [
+              "firmware_version",
+              ""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  "Bridge": {
+    "9a465e69-04fe-4a88-b017-2efe67f8403f": {
+      "initial": {
+        "name": "hvssw0",
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "88513ba2-70b0-49d3-9126-125e904cdd4d"
+            ],
+            [
+              "uuid",
+              "91a503e4-01b6-479e-b8ed-c3f576e7ee40"
+            ],
+            [
+              "uuid",
+              "c0e1662a-a5ea-464b-bf54-d8818367fba5"
+            ]
+          ]
+        ]
+      }
+    },
+    "fa643198-ac1f-44eb-8a4f-77aed4869e91": {
+      "initial": {
+        "name": "HOMOK",
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "9c98631a-d939-4c53-a784-c08e75f95c3a"
+            ],
+            [
+              "uuid",
+              "a29aedca-83a8-4c28-9b74-cb1209963d95"
+            ],
+            [
+              "uuid",
+              "d8de8f3a-e510-43af-b96c-253b6036ae08"
+            ]
+          ]
+        ]
+      }
+    },
+    "9f4d5f4b-702d-406e-8bdb-2ee0fd4533f5": {
+      "initial": {
+        "name": "hujak",
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "0286abdf-addb-4edb-b8c3-ef0e20d05ec5"
+            ],
+            [
+              "uuid",
+              "9f96578b-aa64-4510-a424-05cb0b107410"
+            ],
+            [
+              "uuid",
+              "bd2bcc5d-ff61-4c1a-9a05-80d8f062aa08"
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  "Open_vSwitch": {
+    "f6b8fb24-465b-4c31-a9f4-69b50dba71c9": {
+      "initial": {
+        "bridges": [
+          "set",
+          [
+            [
+              "uuid",
+              "9a465e69-04fe-4a88-b017-2efe67f8403f"
+            ],
+            [
+              "uuid",
+              "9f4d5f4b-702d-406e-8bdb-2ee0fd4533f5"
+            ],
+            [
+              "uuid",
+              "fa643198-ac1f-44eb-8a4f-77aed4869e91"
+            ]
+          ]
+        ],
+        "cur_cfg": 738
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "Interface": {
+    "8a069572-7c73-4bb9-93ea-9172b1f4077d": {
+      "modify": {
+        "ofport": 65534,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ]
+      }
+    },
+    "48ad294d-8f95-45ee-ac9a-82a87921e1f5": {
+      "modify": {
+        "ofport": 1
+      }
+    },
+    "7836605d-04ae-49be-878e-95a596d34d34": {
+      "modify": {
+        "ofport": 3
+      }
+    },
+    "38ab6220-9ad5-4186-87b1-3038b93de481": {
+      "modify": {
+        "ofport": 3
+      }
+    },
+    "f6ba8eef-3587-4ada-8d7d-22a54912fba9": {
+      "modify": {
+        "ofport": 1
+      }
+    },
+    "f07be9b9-acc4-423b-9b25-e991788d2aa9": {
+      "modify": {
+        "ofport": 65534,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ]
+      }
+    },
+    "51c8bdec-4ea8-429e-8358-5a7222ac82b9": {
+      "modify": {
+        "ofport": 2
+      }
+    }
+  },
+  "Open_vSwitch": {
+    "f6b8fb24-465b-4c31-a9f4-69b50dba71c9": {
+      "modify": {
+        "cur_cfg": 739
+      }
+    }
+  }
+}

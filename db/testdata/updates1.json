@@ -1,0 +1,486 @@
+{
+  "Port": {
+    "3acb0b49-1615-4f88-a8fb-b1e4ba62dda5": {
+      "insert": {
+        "name": "uplink1",
+        "interfaces": [
+          "uuid",
+          "48ad294d-8f95-45ee-ac9a-82a87921e1f5"
+        ],
+        "vlan_mode": "trunk",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_type",
+              "uplink_bond"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "trunks": 901,
+        "bond_mode": "balance-slb"
+      }
+    },
+    "3d5e404a-e362-4dc7-93cc-8231883bf656": {
+      "insert": {
+        "name": "uplink0",
+        "interfaces": [
+          "uuid",
+          "38ab6220-9ad5-4186-87b1-3038b93de481"
+        ],
+        "vlan_mode": "trunk",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_type",
+              "uplink_bond"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "bond_mode": "balance-slb"
+      }
+    },
+    "b86e5493-bd9c-4e38-a322-691beb1c6549": {
+      "insert": {
+        "protected": true,
+        "name": "eth5d0",
+        "interfaces": [
+          "uuid",
+          "f6ba8eef-3587-4ada-8d7d-22a54912fba9"
+        ],
+        "vlan_mode": "dot1q-tunnel",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth5"
+            ],
+            [
+              "umb_type",
+              "patch_down"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "tag": 1
+      }
+    },
+    "aeb15ba2-33bd-496a-a7d2-391a01dc34b0": {
+      "insert": {
+        "name": "n1",
+        "interfaces": [
+          "uuid",
+          "f07be9b9-acc4-423b-9b25-e991788d2aa9"
+        ]
+      }
+    },
+    "0d0b195e-1b59-472a-9063-ef53d9dcee01": {
+      "insert": {
+        "protected": true,
+        "name": "eth5d1",
+        "interfaces": [
+          "uuid",
+          "7836605d-04ae-49be-878e-95a596d34d34"
+        ],
+        "vlan_mode": "dot1q-tunnel",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth5"
+            ],
+            [
+              "umb_type",
+              "patch_down"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "tag": 1
+      }
+    },
+    "a29aedca-83a8-4c28-9b74-cb1209963d95": {
+      "modify": {
+        "vlan_mode": "dot1q-tunnel",
+        "tag": 1,
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth5"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "uplink"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    },
+    "9c98631a-d939-4c53-a784-c08e75f95c3a": {
+      "modify": {
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_ipv4",
+              "199.9.13.23/21 sop233"
+            ],
+            [
+              "umb_network",
+              "SysX sop233 1"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "sysx"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    },
+    "9ed90eaf-b4d4-4fd5-84ac-1b839e91dd28": {
+      "insert": {
+        "name": "uSwitch0",
+        "interfaces": [
+          "uuid",
+          "8a069572-7c73-4bb9-93ea-9172b1f4077d"
+        ]
+      }
+    }
+  },
+  "Interface": {
+    "8a069572-7c73-4bb9-93ea-9172b1f4077d": {
+      "insert": {
+        "name": "uSwitch0",
+        "type": "internal"
+      }
+    },
+    "48ad294d-8f95-45ee-ac9a-82a87921e1f5": {
+      "insert": {
+        "name": "eth5u1",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth5"
+            ],
+            [
+              "umb_type",
+              "patch_up"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "patch"
+      }
+    },
+    "7836605d-04ae-49be-878e-95a596d34d34": {
+      "insert": {
+        "name": "eth5d1",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth5"
+            ],
+            [
+              "umb_type",
+              "patch_down"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "patch"
+      }
+    },
+    "38ab6220-9ad5-4186-87b1-3038b93de481": {
+      "insert": {
+        "name": "eth5u0",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth5"
+            ],
+            [
+              "umb_type",
+              "patch_up"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "patch"
+      }
+    },
+    "f6ba8eef-3587-4ada-8d7d-22a54912fba9": {
+      "insert": {
+        "name": "eth5d0",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth5"
+            ],
+            [
+              "umb_type",
+              "patch_down"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "patch"
+      }
+    },
+    "f07be9b9-acc4-423b-9b25-e991788d2aa9": {
+      "insert": {
+        "name": "n1",
+        "type": "internal"
+      }
+    },
+    "51c8bdec-4ea8-429e-8358-5a7222ac82b9": {
+      "modify": {
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth5"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "uplink"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "system"
+      }
+    }
+  },
+  "Bridge": {
+    "1bcc43df-9fe8-4ff0-94dd-24a39d6686b5": {
+      "insert": {
+        "name": "uSwitch0",
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "0d0b195e-1b59-472a-9063-ef53d9dcee01"
+            ],
+            [
+              "uuid",
+              "9ed90eaf-b4d4-4fd5-84ac-1b839e91dd28"
+            ],
+            [
+              "uuid",
+              "a29aedca-83a8-4c28-9b74-cb1209963d95"
+            ],
+            [
+              "uuid",
+              "b86e5493-bd9c-4e38-a322-691beb1c6549"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_mtu",
+              "1500"
+            ],
+            [
+              "umb_nics_active",
+              "eth5"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_teaming",
+              "balance-slb"
+            ],
+            [
+              "umb_type",
+              "uplink"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    },
+    "fa643198-ac1f-44eb-8a4f-77aed4869e91": {
+      "modify": {
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "3d5e404a-e362-4dc7-93cc-8231883bf656"
+            ],
+            [
+              "uuid",
+              "9c98631a-d939-4c53-a784-c08e75f95c3a"
+            ],
+            [
+              "uuid",
+              "a29aedca-83a8-4c28-9b74-cb1209963d95"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_network",
+              "HOMOK"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_teaming",
+              "inherit"
+            ],
+            [
+              "umb_type",
+              "net"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    },
+    "1a9531b6-395a-4415-a139-70a64608e981": {
+      "insert": {
+        "name": "n1",
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "3acb0b49-1615-4f88-a8fb-b1e4ba62dda5"
+            ],
+            [
+              "uuid",
+              "9c98631a-d939-4c53-a784-c08e75f95c3a"
+            ],
+            [
+              "uuid",
+              "aeb15ba2-33bd-496a-a7d2-391a01dc34b0"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_network",
+              "SysX sop233 1"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_teaming",
+              "inherit"
+            ],
+            [
+              "umb_type",
+              "sysx"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  "Open_vSwitch": {
+    "f6b8fb24-465b-4c31-a9f4-69b50dba71c9": {
+      "modify": {
+        "bridges": [
+          "set",
+          [
+            [
+              "uuid",
+              "1a9531b6-395a-4415-a139-70a64608e981"
+            ],
+            [
+              "uuid",
+              "1bcc43df-9fe8-4ff0-94dd-24a39d6686b5"
+            ]
+          ]
+        ]
+      }
+    }
+  }
+}
