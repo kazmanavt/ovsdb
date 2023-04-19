@@ -40,7 +40,7 @@ type DB interface {
 
 	// FindRecord returns a list of UUIDs of rows in the table that match the conditions.
 	// it returns an empty list if no rows match the conditions.
-	FindRecord(tName string, where []types.Condition) []string
+	FindRecord(tName string, wheres ...[]types.Condition) []string
 
 	// Update2 applies the updates2 received as result of monitor_cond or monitor_cond to current database.
 	Update2(upd2 monitor.Updates2) error
@@ -169,11 +169,15 @@ func (d *dbImpl) GetS(tName, uuid, cName string) any {
 
 // FindRecord returns a list of UUIDs of rows in the table that match the conditions.
 // it returns an empty list if no rows match the conditions.
-func (d *dbImpl) FindRecord(tName string, where []types.Condition) []string {
+func (d *dbImpl) FindRecord(tName string, wheres ...[]types.Condition) []string {
 	d.mu.RLock()
 	defer d.mu.RUnlock()
 	if t, ok := d.tables[tName]; ok {
-		return t.findRecord(where)
+		var res []string
+		for _, where := range wheres {
+			res = append(res, t.findRecord(where)...)
+		}
+		return res
 	}
 	return []string{}
 }
