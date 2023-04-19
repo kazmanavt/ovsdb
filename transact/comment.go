@@ -11,7 +11,7 @@ func (c *commentOp) Name() string {
 	return c.Op
 }
 
-func (c *commentOp) Validate(dSch *schema.DbSchema) error {
+func (c *commentOp) Validate(_ *schema.DbSchema) error {
 	return nil
 }
 

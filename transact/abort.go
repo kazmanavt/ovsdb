@@ -10,7 +10,7 @@ func (a *abortOp) Name() string {
 	return a.Op
 }
 
-func (a *abortOp) Validate(dSch *schema.DbSchema) error {
+func (a *abortOp) Validate(_ *schema.DbSchema) error {
 	return nil
 }
 

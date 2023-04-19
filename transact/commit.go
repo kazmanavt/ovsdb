@@ -11,7 +11,7 @@ func (c *commitOp) Name() string {
 	return c.Op
 }
 
-func (c *commitOp) Validate(dSch *schema.DbSchema) error {
+func (c *commitOp) Validate(_ *schema.DbSchema) error {
 	return nil
 }
 

@@ -16,7 +16,7 @@ func (i *insertOp) Name() string {
 	return i.Op
 }
 
-func (i *insertOp) Validate(dSch *schema.DbSchema) error {
+func (i *insertOp) Validate(_ *schema.DbSchema) error {
 	if i.Row == nil {
 		return fmt.Errorf("nil row to insert operation")
 	}

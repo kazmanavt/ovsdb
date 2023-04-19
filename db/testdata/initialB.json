@@ -1,0 +1,132 @@
+{
+  "Port": {
+    "4cfd47c0-c918-41c6-bc89-3836709e8569": {
+      "initial": {
+        "name": "eth0",
+        "interfaces": [
+          "uuid",
+          "4fd6a673-48bb-46dd-8385-fc9a37450917"
+        ]
+      }
+    },
+    "92f9b26e-f9bb-4e85-8ac2-68458bf89de9": {
+      "initial": {
+        "name": "sys0",
+        "interfaces": [
+          "uuid",
+          "5e4ddb9d-cd09-486e-9e12-51f9797ecdb0"
+        ]
+      }
+    },
+    "db7257b4-b8e9-45ff-b239-e730999e8bba": {
+      "initial": {
+        "name": "hvssw0",
+        "interfaces": [
+          "uuid",
+          "b0aa00b3-b683-4cc8-acff-a29baf300b36"
+        ]
+      }
+    }
+  },
+  "Interface": {
+    "b0aa00b3-b683-4cc8-acff-a29baf300b36": {
+      "initial": {
+        "name": "hvssw0",
+        "mtu": 1500,
+        "ofport": 65534,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "admin_state": "down",
+        "type": "internal",
+        "link_state": "down"
+      }
+    },
+    "4fd6a673-48bb-46dd-8385-fc9a37450917": {
+      "initial": {
+        "name": "eth0",
+        "mtu": 1500,
+        "ofport": 1,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "virtio_net"
+            ],
+            [
+              "driver_version",
+              "1.0.0"
+            ],
+            [
+              "firmware_version",
+              ""
+            ]
+          ]
+        ],
+        "admin_state": "up",
+        "link_state": "up"
+      }
+    },
+    "5e4ddb9d-cd09-486e-9e12-51f9797ecdb0": {
+      "initial": {
+        "name": "sys0",
+        "mtu": 1500,
+        "ofport": 2,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "admin_state": "up",
+        "type": "internal",
+        "link_state": "up"
+      }
+    }
+  },
+  "Bridge": {
+    "6fb82f62-dafc-480a-bef4-84d2b1bf4793": {
+      "initial": {
+        "name": "hvssw0",
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "4cfd47c0-c918-41c6-bc89-3836709e8569"
+            ],
+            [
+              "uuid",
+              "92f9b26e-f9bb-4e85-8ac2-68458bf89de9"
+            ],
+            [
+              "uuid",
+              "db7257b4-b8e9-45ff-b239-e730999e8bba"
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  "Open_vSwitch": {
+    "a9d7d216-c551-4db3-88c6-a38435aeaf3f": {
+      "initial": {
+        "bridges": [
+          "uuid",
+          "6fb82f62-dafc-480a-bef4-84d2b1bf4793"
+        ],
+        "cur_cfg": 129
+      }
+    }
+  }
+}

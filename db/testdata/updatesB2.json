@@ -1,0 +1,136 @@
+{
+  "Interface": {
+    "8ef674bf-0ce0-4c24-bd2a-15dfc16fb678": {
+      "modify": {
+        "ofport": 1,
+        "admin_state": "up",
+        "link_state": "up"
+      }
+    },
+    "d401c3c5-e892-4b1c-853f-34bec442fc17": {
+      "modify": {
+        "ofport": 3,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "admin_state": "down",
+        "link_state": "down"
+      }
+    },
+    "06f54461-fd37-417d-80c1-3264f75cf675": {
+      "modify": {
+        "ofport": 3,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "admin_state": "down",
+        "link_state": "down"
+      }
+    },
+    "51ab3f3c-2c63-4862-b7eb-604f1eb64f6c": {
+      "modify": {
+        "ofport": 3,
+        "admin_state": "up",
+        "link_state": "up"
+      }
+    },
+    "f8a0a364-d76e-4b29-8cfb-322c164108f5": {
+      "modify": {
+        "mtu": 1500,
+        "ofport": 65534,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "admin_state": "down",
+        "link_state": "down"
+      }
+    },
+    "3466304a-9a2d-43a9-b4bc-a5e9a0a2580b": {
+      "modify": {
+        "ofport": 4,
+        "admin_state": "up",
+        "link_state": "up"
+      }
+    },
+    "ce608ff2-f28a-4b1e-adf2-4c83b5dfca28": {
+      "modify": {
+        "mtu": 1500,
+        "ofport": 65534,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "openvswitch"
+            ]
+          ]
+        ],
+        "admin_state": "down",
+        "link_state": "down"
+      }
+    },
+    "9b339e1b-ccb0-4779-802b-1f478b1caeab": {
+      "modify": {
+        "mtu": 1500,
+        "ofport": 2,
+        "status": [
+          "map",
+          [
+            [
+              "driver_name",
+              "virtio_net"
+            ],
+            [
+              "driver_version",
+              "1.0.0"
+            ],
+            [
+              "firmware_version",
+              ""
+            ]
+          ]
+        ],
+        "admin_state": "up",
+        "link_state": "up"
+      }
+    },
+    "9e376df3-be12-4859-83b3-febd45d05283": {
+      "modify": {
+        "ofport": 1,
+        "admin_state": "up",
+        "link_state": "up"
+      }
+    },
+    "5e4ddb9d-cd09-486e-9e12-51f9797ecdb0": {
+      "modify": {
+        "admin_state": "down",
+        "link_state": "down"
+      }
+    }
+  },
+  "Open_vSwitch": {
+    "a9d7d216-c551-4db3-88c6-a38435aeaf3f": {
+      "modify": {
+        "cur_cfg": 130
+      }
+    }
+  }
+}

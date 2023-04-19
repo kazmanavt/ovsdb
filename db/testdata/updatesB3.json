@@ -1,0 +1,14 @@
+{
+  "Port": {
+    "8b8d8aaa-2ba7-411a-bbc5-557245943d5b": {
+      "modify": {
+        "bond_active_slave": "be:55:b1:94:1d:9d"
+      }
+    },
+    "c9179ecb-00a2-4926-9b93-44e97d24b122": {
+      "modify": {
+        "bond_active_slave": "0e:aa:d9:7e:c0:f7"
+      }
+    }
+  }
+}

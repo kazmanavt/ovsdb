@@ -55,6 +55,7 @@ func (s *Set[T]) String() string {
 
 func (s Set[T]) Update2(_s2 any) (any, error) {
 	s2, ok := _s2.(Set[T])
+	s3 := s
 	if !ok {
 		return nil, fmt.Errorf("unsuitable Set update2")
 	}
@@ -63,18 +64,18 @@ func (s Set[T]) Update2(_s2 any) (any, error) {
 	}
 	for _, v2 := range s2 {
 		found := false
-		for i, v := range s {
+		for i, v := range s3 {
 			if v == v2 {
 				found = true
-				s = append((s)[:i], (s)[i+1:]...)
+				s3 = append((s3)[:i], (s3)[i+1:]...)
 				break
 			}
 		}
 		if !found {
-			s = append(s, v2)
+			s3 = append(s3, v2)
 		}
 	}
-	return s, nil
+	return s3, nil
 }
 
 func (s Set[T]) Has(_val T) bool {

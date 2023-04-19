@@ -1,0 +1,651 @@
+{
+  "Port": {
+    "4cfd47c0-c918-41c6-bc89-3836709e8569": {
+      "delete": null
+    },
+    "8b8d8aaa-2ba7-411a-bbc5-557245943d5b": {
+      "insert": {
+        "name": "nu1",
+        "interfaces": [
+          "set",
+          [
+            [
+              "uuid",
+              "8ef674bf-0ce0-4c24-bd2a-15dfc16fb678"
+            ],
+            [
+              "uuid",
+              "d401c3c5-e892-4b1c-853f-34bec442fc17"
+            ]
+          ]
+        ],
+        "other_config": [
+          "map",
+          [
+            [
+              "bond-detect-mode",
+              "carrier"
+            ],
+            [
+              "bond-rebalance-interval",
+              "5000"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_network",
+              "SysX sys0 1"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "uplink_bond"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "bond_mode": "balance-slb"
+      }
+    },
+    "c8be4f0c-45aa-4ef1-b145-659297527ef6": {
+      "insert": {
+        "name": "eth0",
+        "vlan_mode": "dot1q-tunnel",
+        "interfaces": [
+          "uuid",
+          "9b339e1b-ccb0-4779-802b-1f478b1caeab"
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth0"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "uplink"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "tag": 1
+      }
+    },
+    "116160b6-2b93-4686-8ee7-62bb24536d48": {
+      "insert": {
+        "name": "n1",
+        "interfaces": [
+          "uuid",
+          "f8a0a364-d76e-4b29-8cfb-322c164108f5"
+        ]
+      }
+    },
+    "a3bae394-ed66-4f8d-9167-305501d468d6": {
+      "insert": {
+        "name": "eth00d",
+        "protected": true,
+        "vlan_mode": "dot1q-tunnel",
+        "interfaces": [
+          "uuid",
+          "9e376df3-be12-4859-83b3-febd45d05283"
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth0"
+            ],
+            [
+              "umb_network",
+              "hvssw0"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "patch_down"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "tag": 1
+      }
+    },
+    "64b4faed-4d26-492c-9dd3-c3331efa87f6": {
+      "insert": {
+        "name": "uSwitch0",
+        "interfaces": [
+          "uuid",
+          "ce608ff2-f28a-4b1e-adf2-4c83b5dfca28"
+        ]
+      }
+    },
+    "c9179ecb-00a2-4926-9b93-44e97d24b122": {
+      "insert": {
+        "name": "nu0",
+        "interfaces": [
+          "set",
+          [
+            [
+              "uuid",
+              "06f54461-fd37-417d-80c1-3264f75cf675"
+            ],
+            [
+              "uuid",
+              "3466304a-9a2d-43a9-b4bc-a5e9a0a2580b"
+            ]
+          ]
+        ],
+        "other_config": [
+          "map",
+          [
+            [
+              "bond-detect-mode",
+              "carrier"
+            ],
+            [
+              "bond-rebalance-interval",
+              "5000"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_network",
+              "hvssw0"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "uplink_bond"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "bond_mode": "balance-slb"
+      }
+    },
+    "ce582dc1-198b-4c2d-8a3f-fcd941db94b1": {
+      "insert": {
+        "name": "eth01d",
+        "protected": true,
+        "vlan_mode": "dot1q-tunnel",
+        "interfaces": [
+          "uuid",
+          "51ab3f3c-2c63-4862-b7eb-604f1eb64f6c"
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth0"
+            ],
+            [
+              "umb_network",
+              "SysX sys0 1"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "patch_down"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "tag": 1
+      }
+    },
+    "92f9b26e-f9bb-4e85-8ac2-68458bf89de9": {
+      "modify": {
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_ipv4",
+              "10.10.101.81/24"
+            ],
+            [
+              "umb_network",
+              "SysX sys0 1"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "sysx"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  "Interface": {
+    "8ef674bf-0ce0-4c24-bd2a-15dfc16fb678": {
+      "insert": {
+        "name": "eth01u",
+        "options": [
+          "map",
+          [
+            [
+              "peer",
+              "eth01d"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth0"
+            ],
+            [
+              "umb_network",
+              "SysX sys0 1"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "patch_up"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "patch"
+      }
+    },
+    "d401c3c5-e892-4b1c-853f-34bec442fc17": {
+      "insert": {
+        "name": "nu1",
+        "type": "internal"
+      }
+    },
+    "4fd6a673-48bb-46dd-8385-fc9a37450917": {
+      "delete": null
+    },
+    "06f54461-fd37-417d-80c1-3264f75cf675": {
+      "insert": {
+        "name": "nu0",
+        "type": "internal"
+      }
+    },
+    "51ab3f3c-2c63-4862-b7eb-604f1eb64f6c": {
+      "insert": {
+        "name": "eth01d",
+        "options": [
+          "map",
+          [
+            [
+              "peer",
+              "eth01u"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth0"
+            ],
+            [
+              "umb_network",
+              "SysX sys0 1"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "patch_down"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "patch"
+      }
+    },
+    "f8a0a364-d76e-4b29-8cfb-322c164108f5": {
+      "insert": {
+        "name": "n1",
+        "type": "internal"
+      }
+    },
+    "3466304a-9a2d-43a9-b4bc-a5e9a0a2580b": {
+      "insert": {
+        "name": "eth00u",
+        "options": [
+          "map",
+          [
+            [
+              "peer",
+              "eth00d"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth0"
+            ],
+            [
+              "umb_network",
+              "hvssw0"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "patch_up"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "patch"
+      }
+    },
+    "ce608ff2-f28a-4b1e-adf2-4c83b5dfca28": {
+      "insert": {
+        "name": "uSwitch0",
+        "type": "internal"
+      }
+    },
+    "9b339e1b-ccb0-4779-802b-1f478b1caeab": {
+      "insert": {
+        "name": "eth0",
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth0"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "uplink"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "system"
+      }
+    },
+    "9e376df3-be12-4859-83b3-febd45d05283": {
+      "insert": {
+        "name": "eth00d",
+        "options": [
+          "map",
+          [
+            [
+              "peer",
+              "eth00u"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_netlink",
+              "eth0"
+            ],
+            [
+              "umb_network",
+              "hvssw0"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_type",
+              "patch_down"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ],
+        "type": "patch"
+      }
+    }
+  },
+  "Bridge": {
+    "6fb82f62-dafc-480a-bef4-84d2b1bf4793": {
+      "modify": {
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "4cfd47c0-c918-41c6-bc89-3836709e8569"
+            ],
+            [
+              "uuid",
+              "92f9b26e-f9bb-4e85-8ac2-68458bf89de9"
+            ],
+            [
+              "uuid",
+              "c9179ecb-00a2-4926-9b93-44e97d24b122"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_network",
+              "hvssw0"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_teaming",
+              "inherit"
+            ],
+            [
+              "umb_type",
+              "net"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    },
+    "437c5cd9-adb1-48e9-b648-fcb15dadb41d": {
+      "insert": {
+        "name": "uSwitch0",
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "64b4faed-4d26-492c-9dd3-c3331efa87f6"
+            ],
+            [
+              "uuid",
+              "a3bae394-ed66-4f8d-9167-305501d468d6"
+            ],
+            [
+              "uuid",
+              "c8be4f0c-45aa-4ef1-b145-659297527ef6"
+            ],
+            [
+              "uuid",
+              "ce582dc1-198b-4c2d-8a3f-fcd941db94b1"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_mtu",
+              "1500"
+            ],
+            [
+              "umb_nics_active",
+              "eth0"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_teaming",
+              "balance-slb"
+            ],
+            [
+              "umb_type",
+              "uplink"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    },
+    "b3319e94-0a66-4116-8657-8f193bf89d64": {
+      "insert": {
+        "name": "n1",
+        "ports": [
+          "set",
+          [
+            [
+              "uuid",
+              "116160b6-2b93-4686-8ee7-62bb24536d48"
+            ],
+            [
+              "uuid",
+              "8b8d8aaa-2ba7-411a-bbc5-557245943d5b"
+            ],
+            [
+              "uuid",
+              "92f9b26e-f9bb-4e85-8ac2-68458bf89de9"
+            ]
+          ]
+        ],
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_network",
+              "SysX sys0 1"
+            ],
+            [
+              "umb_switch",
+              "uSwitch0"
+            ],
+            [
+              "umb_teaming",
+              "inherit"
+            ],
+            [
+              "umb_type",
+              "sysx"
+            ],
+            [
+              "umb_version",
+              "1.0.0"
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  "Open_vSwitch": {
+    "a9d7d216-c551-4db3-88c6-a38435aeaf3f": {
+      "modify": {
+        "bridges": [
+          "set",
+          [
+            [
+              "uuid",
+              "437c5cd9-adb1-48e9-b648-fcb15dadb41d"
+            ],
+            [
+              "uuid",
+              "b3319e94-0a66-4116-8657-8f193bf89d64"
+            ]
+          ]
+        ]
+      }
+    }
+  }
+}
