@@ -56,7 +56,7 @@ type dbImpl struct {
 	tNames  []string
 	mu      sync.RWMutex
 	tables  map[string]*tableImpl
-	updated chan struct{}
+	updated map[string]chan<- struct{}
 }
 
 func NewDB(sch *schema.DbSchema) DB {
@@ -80,7 +80,7 @@ func NewDB(sch *schema.DbSchema) DB {
 		sch:     sch,
 		tNames:  tNames,
 		tables:  tables,
-		updated: make(chan struct{}, 1),
+		updated: make(map[string]chan<- struct{}),
 	}
 }
 
@@ -186,9 +186,11 @@ func (d *dbImpl) Update2(upd2 monitor.Updates2) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 	defer func() {
-		select {
-		case d.updated <- struct{}{}:
-		default:
+		for _, ch := range d.updated {
+			select {
+			case ch <- struct{}{}:
+			default:
+			}
 		}
 	}()
 	for tName, tUpd2 := range upd2 {
@@ -201,16 +203,33 @@ func (d *dbImpl) Update2(upd2 monitor.Updates2) error {
 	return nil
 }
 
+func (d *dbImpl) SubscribeUpdates(uId string) <-chan struct{} {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	updChan := make(chan struct{}, 100)
+	d.updated[uId] = updChan
+	return updChan
+}
+
+func (d *dbImpl) UnsubscribeUpdates(uId string) {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	close(d.updated[uId])
+	delete(d.updated, uId)
+}
+
 func (d *dbImpl) WaitRevision(rev int, timeout time.Duration) bool {
 	uuids := d.FindRecord("Open_vSwitch", nil)
 	if len(uuids) != 1 {
 		return false
 	}
 
+	upd := d.SubscribeUpdates("waitRevision")
+	defer d.UnsubscribeUpdates("waitRevision")
 	timeoutTimer := time.NewTimer(timeout)
 	for {
 		select {
-		case <-d.updated:
+		case <-upd:
 			if d.GetS("Open_vSwitch", uuids[0], "cur_cfg").(int) >= rev {
 				timeoutTimer.Stop()
 				return true
