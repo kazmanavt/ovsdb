@@ -38,7 +38,14 @@ func (cs *ColumnSchema) ValidateCond(op string, value any) (err error) {
 	}
 
 	// validate value
-	return cs.ValidateValue(value)
+	checkConstrant := byte(3)
+	if op == "includes" && (strings.HasPrefix(kind, "Set") || strings.HasPrefix(kind, "Map")) {
+		checkConstrant &= ^byte(1)
+	}
+	if op == "excludes" && (strings.HasPrefix(kind, "Set") || strings.HasPrefix(kind, "Map")) {
+		checkConstrant &= ^byte(2)
+	}
+	return cs.ValidateValue(value, checkConstrant)
 }
 
 func (cs *ColumnSchema) ValidateMutation(op string, value any) error {
@@ -72,11 +79,24 @@ func (cs *ColumnSchema) ValidateMutation(op string, value any) error {
 		(strings.Contains("Set[real]", kind) && rv.Kind() == reflect.Float64) {
 		return cs.Type.Key.ValidateValue(value, false)
 	}
-	return cs.ValidateValue(value, false)
+	if strings.HasPrefix(kind, "Set") && op == "insert" {
+		return cs.ValidateValue(value, 2)
+	}
+	if strings.HasPrefix(kind, "Set") && op == "delete" {
+		return cs.ValidateValue(value, 0)
+	}
+	if strings.HasPrefix(kind, "Map") && op == "insert" {
+		return cs.ValidateValue(value, 2)
+	}
+	if strings.HasPrefix(kind, "Map") && op == "delete" {
+		// TODO: validation case if delete from map by keys only
+		return cs.ValidateValue(value, 0)
+	}
+	return cs.ValidateValue(value, 0)
 }
 
-func (cs *ColumnSchema) ValidateValue(value any, checks ...bool) error {
-	checkConstraints, checkKeysConstraints, checkValuesConstraints := true, true, true
+func (cs *ColumnSchema) ValidateValue(value any, checks ...byte) error {
+	checkConstraints, checkKeysConstraints, checkValuesConstraints := byte(3), byte(3), byte(3)
 	switch len(checks) {
 	case 0:
 	case 1:
@@ -91,14 +111,17 @@ func (cs *ColumnSchema) ValidateValue(value any, checks ...bool) error {
 		if rv.Kind() != reflect.Map || !types.IsMapType(value) {
 			return fmt.Errorf("expect map got %s", reflect.TypeOf(value).String())
 		}
-		if checkConstraints && (rv.Len() < *cs.Type.Min || rv.Len() > *cs.Type.Max.(*int)) {
-			return fmt.Errorf("column type constraint violation %d not in range [%d, %d]", rv.Len(), *cs.Type.Min, *cs.Type.Max.(*int))
+		if checkConstraints&0x1 != 0 && rv.Len() < *cs.Type.Min {
+			return fmt.Errorf("column type constraint violation %d < %d", rv.Len(), *cs.Type.Min)
+		}
+		if checkConstraints&0x2 != 0 && rv.Len() > *cs.Type.Max.(*int) {
+			return fmt.Errorf("column type constraint violation %d > %d", rv.Len(), *cs.Type.Max.(*int))
 		}
 		for _, k := range rv.MapKeys() {
-			if err := cs.Type.Key.ValidateValue(k.Interface(), checkKeysConstraints); err != nil {
+			if err := cs.Type.Key.ValidateValue(k.Interface(), checkKeysConstraints > 0); err != nil {
 				return err
 			}
-			if err := cs.Type.Value.ValidateValue(rv.MapIndex(k).Interface(), checkValuesConstraints); err != nil {
+			if err := cs.Type.Value.ValidateValue(rv.MapIndex(k).Interface(), checkValuesConstraints > 0); err != nil {
 				return err
 			}
 		}
@@ -112,13 +135,13 @@ func (cs *ColumnSchema) ValidateValue(value any, checks ...bool) error {
 			return fmt.Errorf("column type constraint violation %d not in range [%d, %d]", rv.Len(), *cs.Type.Min, *cs.Type.Max.(*int))
 		}
 		for i := 0; i < rv.Len(); i++ {
-			if err := cs.Type.Key.ValidateValue(rv.Index(i).Interface(), checkKeysConstraints); err != nil {
+			if err := cs.Type.Key.ValidateValue(rv.Index(i).Interface(), checkKeysConstraints > 0); err != nil {
 				return err
 			}
 		}
 		return nil
 	} else {
-		return cs.Type.Key.ValidateValue(value, checkConstraints)
+		return cs.Type.Key.ValidateValue(value, checkConstraints > 0)
 	}
 }
 

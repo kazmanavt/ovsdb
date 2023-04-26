@@ -129,7 +129,7 @@ func (r *rowImpl) set(cName string, value any) {
 	if !ok {
 		panic(fmt.Errorf("schema violated: table %q doesn't have column %q", r.tSch.Name, cName))
 	}
-	if err := cSch.ValidateValue(value, true); err != nil {
+	if err := cSch.ValidateValue(value); err != nil {
 		panic(fmt.Errorf("schema violated: %v", err))
 	}
 	r.row[cName] = value
