@@ -5,6 +5,7 @@ import (
 	"github.com/kazmanavt/ovsdb/monitor"
 	"github.com/kazmanavt/ovsdb/schema"
 	"github.com/kazmanavt/ovsdb/types"
+	"math/rand"
 	"strings"
 	"sync"
 	"time"
@@ -218,14 +219,18 @@ func (d *dbImpl) UnsubscribeUpdates(uId string) {
 	delete(d.updated, uId)
 }
 
+var r = rand.New(rand.NewSource(time.Now().UnixNano()))
+
 func (d *dbImpl) WaitRevision(rev int, timeout time.Duration) bool {
 	uuids := d.FindRecord("Open_vSwitch", nil)
 	if len(uuids) != 1 {
 		return false
 	}
 
-	upd := d.SubscribeUpdates("waitRevision")
-	defer d.UnsubscribeUpdates("waitRevision")
+	bu := make([]byte, 16)
+	r.Read(bu)
+	upd := d.SubscribeUpdates(string(bu))
+	defer d.UnsubscribeUpdates(string(bu))
 	timeoutTimer := time.NewTimer(timeout)
 	for {
 		select {
