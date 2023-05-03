@@ -106,12 +106,12 @@ func (m Map[K, V]) Update2(_m2 any) (any, error) {
 	return m, nil
 }
 
-func (m Map[K,V]) Has(key K) bool {
+func (m Map[K, V]) Has(key K) bool {
 	_, ok := m[key]
 	return ok
 }
 
-func (m Map[K,V]) HasVal(key K, val V) bool {
+func (m Map[K, V]) HasVal(key K, val V) bool {
 	v, ok := m[key]
 	return ok && v == val
 }

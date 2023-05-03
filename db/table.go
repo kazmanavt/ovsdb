@@ -12,7 +12,7 @@ type tableImpl struct {
 	name   string
 	sch    *schema.TableSchema
 	cNames []string
-	mu sync.RWMutex
+	mu     sync.RWMutex
 	rows   map[string]schema.Row
 }
 
@@ -27,7 +27,6 @@ func (t *tableImpl) findRecord(where []types.Condition) []string {
 	}
 	return result
 }
-
 
 // apply updates
 func (t *tableImpl) update2(upd2 monitor.TableUpdate2) error {

@@ -21,19 +21,19 @@ type TableSchema struct {
 	Indexes [][]string               `json:"indexes,omitempty"` // indexes in the table
 }
 
-
 // NewRow creates a new row with the given values.
 // The values are given as a list of key-value pairs.
 // The keys are the column names and the values are the column values.
 // The keys must be strings, NewRow will panic otherwise.
 // The values must be pointers to the column type, NewRow will panic otherwise.
 // For example:
-// 	row := table.NewRow("name", &"foo", "age", &42)
+//
+//	row := table.NewRow("name", &"foo", "age", &42)
 func (ts *TableSchema) NewRow(args ...any) Row {
-	r :=  rowImpl{
+	r := rowImpl{
 		tSch: ts,
 		row:  make(map[string]any),
-		mu:  &sync.RWMutex{},
+		mu:   &sync.RWMutex{},
 	}
 
 	for i := 0; i < len(args); i += 2 {

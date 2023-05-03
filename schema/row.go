@@ -48,7 +48,7 @@ type Row interface {
 
 type rowImpl struct {
 	tSch *TableSchema
-	mu *sync.RWMutex
+	mu   *sync.RWMutex
 	row  map[string]any
 }
 
