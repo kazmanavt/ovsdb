@@ -46,6 +46,9 @@ type DB interface {
 	// Update2 applies the updates2 received as result of monitor_cond or monitor_cond to current database.
 	Update2(upd2 monitor.Updates2) error
 
+	SubscribeUpdates(uId string) <-chan struct{}
+	UnsubscribeUpdates(uId string)
+
 	// WaitRevision waits until the database is updated to the given revision.
 	// it returns true if the database is updated to the given revision. Otherwise, it returns false.
 	WaitRevision(rev int, timeout time.Duration) bool
