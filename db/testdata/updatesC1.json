@@ -1,0 +1,57 @@
+{
+  "Port": {
+    "65e39506-c1ba-4684-9299-c62bdfdf7c7e": {
+      "modify": {
+        "trunks": [
+          "set",
+          [
+            103,
+            107
+          ]
+        ]
+      }
+    },
+    "d8b62a84-2178-46a5-89f5-87d841a8109b": {
+      "modify": {
+        "cvlans": [
+          "set",
+          [
+            103,
+            107
+          ]
+        ]
+      }
+    },
+    "48489df0-e320-4f87-ad9c-3f227e8bb3a3": {
+      "modify": {
+        "tag": 107
+      }
+    },
+    "c17e8ba3-8bda-4175-8285-48ceed5bd5ed": {
+      "modify": {
+        "cvlans": [
+          "set",
+          [
+            103,
+            107
+          ]
+        ]
+      }
+    }
+  },
+  "Bridge": {
+    "165f8f88-f073-41bc-8301-864050532dab": {
+      "modify": {
+        "external_ids": [
+          "map",
+          [
+            [
+              "umb_net_opts",
+              "{\"vlan\":107,\"security\":{\"promiscuous_mode\":\"inherit\",\"mac_change\":\"inherit\",\"forged_transmits\":\"inherit\"},\"shaping\":{\"inherit\":true,\"enabled\":false,\"average_bw\":0,\"peak_bw\":0,\"burst_size\":0},\"teaming\":{\"mode\":\"inherit\",\"link_detect\":\"inherit\",\"notify_switches\":\"inherit\",\"failback\":\"inherit\"},\"override_nics\":false,\"nics\":{}}"
+            ]
+          ]
+        ]
+      }
+    }
+  }
+}

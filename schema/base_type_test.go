@@ -78,6 +78,12 @@ func TestBaseType_ValidateValue(t *testing.T) {
 			assert.NoError(t, err)
 			assert.NoError(t, bt.ValidateValue("foo", true))
 		})
+		t.Run("enum2", func(t *testing.T) {
+			var bt BaseType
+			err := bt.UnmarshalJSON([]byte(`{"type": "string", "enum": ["set", ["active-backup", "balance-slb", "balance-tcp"]]} `))
+			assert.NoError(t, err)
+			assert.NoError(t, bt.ValidateValue("active-backup", true))
+		})
 		t.Run("enum out of range", func(t *testing.T) {
 			var bt BaseType
 			err := bt.UnmarshalJSON([]byte(`{"type": "string", "enum": ["set", ["foo", "bar"]]} `))

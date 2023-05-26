@@ -37,6 +37,9 @@ type Row interface {
 	// If the column is not set, the default value is returned.
 	// If the column is not in the table, it panics.
 	Get(cName string) any
+	// GetE returns the value of the column cName of table Row.
+	// If the column is not set, second return param is false.
+	GetE(cName string) (any, bool)
 	// Set sets the value of the column cName of table Row to value.
 	// If the column is not in the table, or type of value violate schema, Set will panic.
 	Set(cName string, value any)
@@ -98,6 +101,12 @@ func (r *rowImpl) Get(cName string) any {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	return r.get(cName)
+}
+
+// GetE implements Row.GetE.
+func (r *rowImpl) GetE(cName string) (any, bool) {
+	value, ok := r.row[cName]
+	return value, ok
 }
 
 // get is the internal implementation of Get. (unlocked)
