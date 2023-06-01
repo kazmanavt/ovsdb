@@ -47,6 +47,8 @@ type Row interface {
 	Update2(diff Row) error
 	// Match returns true if the row matches the conditions.
 	Match(where []types.Condition) bool
+	// Len returns the number of assigned columns in the row.
+	Len() int
 }
 
 type rowImpl struct {
@@ -189,4 +191,10 @@ func (r *rowImpl) Match(where []types.Condition) bool {
 		}
 	}
 	return true
+}
+
+func (r *rowImpl) Len() int {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	return len(r.row)
 }
