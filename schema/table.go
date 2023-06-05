@@ -36,7 +36,7 @@ func (ts *TableSchema) NewRow(args ...any) Row {
 		mu:   &sync.RWMutex{},
 	}
 
-	for i := 0; i < len(args); i += 2 {
+	for i := 0; i+1 < len(args); i += 2 {
 		cName, ok := args[i].(string)
 		if !ok {
 			panic("column name must be a string")
