@@ -37,6 +37,8 @@ func (s *Set[T]) UnmarshalJSON(data []byte) error {
 func (s Set[T]) MarshalJSON() ([]byte, error) {
 	if len(s) == 1 {
 		return json.Marshal(s[0])
+	} else if s == nil {
+		s = []T{}
 	}
 	return json.Marshal([]any{setMark, []T(s)})
 }

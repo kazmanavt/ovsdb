@@ -50,6 +50,9 @@ var mapMarshalPool = sync.Pool{
 
 func (m Map[K, V]) MarshalJSON() ([]byte, error) {
 	//b := make([][2]any, 0, len(m))
+	if m == nil {
+		m = make(map[K]V)
+	}
 	b := mapMarshalPool.Get().([][2]any)
 	if cap(b) < len(m) {
 		b = make([][2]any, len(m))
