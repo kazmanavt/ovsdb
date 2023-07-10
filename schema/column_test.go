@@ -22,7 +22,7 @@ func TestColumnSchema_ValidateValue(t *testing.T) {
 		err = cSch.ValidateValue(types.Set[string]{"balance-slb"})
 		require.NoError(t, err, "failed to validate value")
 		err = cSch.ValidateValue([]string{"active-backup"})
-		require.NoError(t, err, "failed to validate value")
+		require.Error(t, err, "should be Set value")
 		err = cSch.ValidateValue("balance-slb1")
 		require.Error(t, err, "failed to validate value")
 	})

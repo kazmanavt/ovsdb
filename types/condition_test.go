@@ -80,26 +80,12 @@ func TestCondition_MarshalJSON(t *testing.T) {
 		require.NoError(t, err, "no error")
 		require.JSONEq(t, `["x", "==", ["uuid", "my-uuid-1-2-3"]]`, string(data), "incorrect JSON")
 	})
-	t.Run("Equal[NamedUUID]", func(t *testing.T) {
-		c := Equal("x", NamedUUID("my-uuid-1-2-3"))
-		require.IsType(t, &conditionImpl[NamedUUID]{}, c, "incorrect type")
-		data, err := json.Marshal(c)
-		require.NoError(t, err, "no error")
-		require.JSONEq(t, `["x", "==", ["named-uuid", "my-uuid-1-2-3"]]`, string(data), "incorrect JSON")
-	})
 	t.Run("Equal[Set[UUID]]", func(t *testing.T) {
 		c := Equal("x", Set[UUID]{"my-uuid-1-2-3"})
 		require.IsType(t, &conditionImpl[Set[UUID]]{}, c, "incorrect type")
 		data, err := json.Marshal(c)
 		require.NoError(t, err, "no error")
 		require.JSONEq(t, `["x", "==", ["uuid", "my-uuid-1-2-3"]]`, string(data), "incorrect JSON")
-	})
-	t.Run("Equal[Map[NamedUUID]]", func(t *testing.T) {
-		c := Equal("x", Map[NamedUUID, float64]{"my-uuid-1-2-3": 1.0})
-		require.IsType(t, &conditionImpl[Map[NamedUUID, float64]]{}, c, "incorrect type")
-		data, err := json.Marshal(c)
-		require.NoError(t, err, "no error")
-		require.JSONEq(t, `["x", "==", ["map", [[["named-uuid", "my-uuid-1-2-3"], 1]] ] ]`, string(data), "incorrect JSON")
 	})
 }
 

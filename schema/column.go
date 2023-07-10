@@ -49,16 +49,6 @@ func (cs *ColumnSchema) ValidateCond(op string, value any) (err error) {
 }
 
 func (cs *ColumnSchema) ValidateMutation(op string, value any) error {
-	if namedSet, ok := value.(types.Set[types.NamedUUID]); ok {
-		var uuidSet types.Set[types.UUID]
-		for _, named := range namedSet {
-			uuidSet = append(uuidSet, types.UUID(named))
-		}
-		value = uuidSet
-	} else if named, ok := value.(types.NamedUUID); ok {
-		value = types.UUID(named)
-	}
-
 	ops := ""
 	kind := cs.Type.GetKind()
 	rv := reflect.ValueOf(value)
