@@ -6,20 +6,19 @@ const (
 
 // AtomicType is the interface that all types that can be used as elements in a Set or Map must implement
 type AtomicType interface {
-	string | int | bool | float64 | UUID | NamedUUID
+	string | int | bool | float64 | UUIDType
 }
 
 type SetType interface {
-	Set[string] | Set[int] | Set[bool] | Set[float64] | Set[UUID] | Set[NamedUUID]
+	Set[string] | Set[int] | Set[bool] | Set[float64] | Set[UUIDType]
 }
 
 type MapType interface {
-	Map[string, string] | Map[string, int] | Map[string, bool] | Map[string, float64] | Map[string, UUID] | Map[string, NamedUUID] |
-		Map[int, string] | Map[int, int] | Map[int, bool] | Map[int, float64] | Map[int, UUID] | Map[int, NamedUUID] |
-		Map[bool, string] | Map[bool, int] | Map[bool, bool] | Map[bool, float64] | Map[bool, UUID] | Map[bool, NamedUUID] |
-		Map[float64, string] | Map[float64, int] | Map[float64, bool] | Map[float64, float64] | Map[float64, UUID] | Map[float64, NamedUUID] |
-		Map[UUID, string] | Map[UUID, int] | Map[UUID, bool] | Map[UUID, float64] | Map[UUID, UUID] | Map[UUID, NamedUUID] |
-		Map[NamedUUID, string] | Map[NamedUUID, int] | Map[NamedUUID, bool] | Map[NamedUUID, float64] | Map[NamedUUID, UUID] | Map[NamedUUID, NamedUUID]
+	Map[string, string] | Map[string, int] | Map[string, bool] | Map[string, float64] | Map[string, UUIDType] |
+		Map[int, string] | Map[int, int] | Map[int, bool] | Map[int, float64] | Map[int, UUIDType] |
+		Map[bool, string] | Map[bool, int] | Map[bool, bool] | Map[bool, float64] | Map[bool, UUIDType] |
+		Map[float64, string] | Map[float64, int] | Map[float64, bool] | Map[float64, float64] | Map[float64, UUIDType] |
+		Map[UUIDType, string] | Map[UUIDType, int] | Map[UUIDType, bool] | Map[UUIDType, float64] | Map[UUIDType, UUIDType]
 }
 
 type BaseType interface {
@@ -32,7 +31,7 @@ type Updater2 interface {
 
 func IsSetType(t any) bool {
 	switch t.(type) {
-	case Set[string], Set[int], Set[bool], Set[float64], Set[UUID], Set[NamedUUID]:
+	case Set[string], Set[int], Set[bool], Set[float64], Set[UUIDType]:
 		return true
 	}
 	return false
@@ -40,12 +39,11 @@ func IsSetType(t any) bool {
 
 func IsMapType(t any) bool {
 	switch t.(type) {
-	case Map[string, string], Map[string, int], Map[string, bool], Map[string, float64], Map[string, UUID], Map[string, NamedUUID],
-		Map[int, string], Map[int, int], Map[int, bool], Map[int, float64], Map[int, UUID], Map[int, NamedUUID],
-		Map[bool, string], Map[bool, int], Map[bool, bool], Map[bool, float64], Map[bool, UUID], Map[bool, NamedUUID],
-		Map[float64, string], Map[float64, int], Map[float64, bool], Map[float64, float64], Map[float64, UUID], Map[float64, NamedUUID],
-		Map[UUID, string], Map[UUID, int], Map[UUID, bool], Map[UUID, float64], Map[UUID, UUID], Map[UUID, NamedUUID],
-		Map[NamedUUID, string], Map[NamedUUID, int], Map[NamedUUID, bool], Map[NamedUUID, float64], Map[NamedUUID, UUID], Map[NamedUUID, NamedUUID]:
+	case Map[string, string], Map[string, int], Map[string, bool], Map[string, float64], Map[string, UUIDType],
+		Map[int, string], Map[int, int], Map[int, bool], Map[int, float64], Map[int, UUIDType],
+		Map[bool, string], Map[bool, int], Map[bool, bool], Map[bool, float64], Map[bool, UUIDType],
+		Map[float64, string], Map[float64, int], Map[float64, bool], Map[float64, float64], Map[float64, UUIDType],
+		Map[UUIDType, string], Map[UUIDType, int], Map[UUIDType, bool], Map[UUIDType, float64], Map[UUIDType, UUIDType]:
 		return true
 	}
 	return false

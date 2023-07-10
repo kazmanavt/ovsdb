@@ -49,15 +49,15 @@ func (cs *ColumnSchema) ValidateCond(op string, value any) (err error) {
 }
 
 func (cs *ColumnSchema) ValidateMutation(op string, value any) error {
-	if namedSet, ok := value.(types.Set[types.NamedUUID]); ok {
-		var uuidSet types.Set[types.UUID]
-		for _, named := range namedSet {
-			uuidSet = append(uuidSet, types.UUID(named))
-		}
-		value = uuidSet
-	} else if named, ok := value.(types.NamedUUID); ok {
-		value = types.UUID(named)
-	}
+	//if namedSet, ok := value.(types.Set[types.NamedUUID]); ok {
+	//	var uuidSet types.Set[types.UUID]
+	//	for _, named := range namedSet {
+	//		uuidSet = append(uuidSet, types.UUID(named))
+	//	}
+	//	value = uuidSet
+	//} else if named, ok := value.(types.NamedUUID); ok {
+	//	value = types.UUID(named)
+	//}
 
 	ops := ""
 	kind := cs.Type.GetKind()
@@ -160,7 +160,7 @@ func (cs *ColumnSchema) GetDefaultValue() any {
 		var v bool
 		return v
 	case "uuid":
-		var v types.UUID
+		var v types.UUIDType
 		return v
 	case "Set[integer]":
 		return types.Set[int]{}
@@ -171,7 +171,7 @@ func (cs *ColumnSchema) GetDefaultValue() any {
 	case "Set[boolean]":
 		return types.Set[bool]{}
 	case "Set[uuid]":
-		return types.Set[types.UUID]{}
+		return types.Set[types.UUIDType]{}
 	case "Map[integer, integer]":
 		return types.Map[int, int]{}
 	case "Map[integer, real]":
@@ -181,7 +181,7 @@ func (cs *ColumnSchema) GetDefaultValue() any {
 	case "Map[integer, boolean]":
 		return types.Map[int, bool]{}
 	case "Map[integer, uuid]":
-		return types.Map[int, types.UUID]{}
+		return types.Map[int, types.UUIDType]{}
 	case "Map[real, integer]":
 		return types.Map[float64, int]{}
 	case "Map[real, real]":
@@ -191,7 +191,7 @@ func (cs *ColumnSchema) GetDefaultValue() any {
 	case "Map[real, boolean]":
 		return types.Map[float64, bool]{}
 	case "Map[real, uuid]":
-		return types.Map[float64, types.UUID]{}
+		return types.Map[float64, types.UUIDType]{}
 	case "Map[string, integer]":
 		return types.Map[string, int]{}
 	case "Map[string, real]":
@@ -201,7 +201,7 @@ func (cs *ColumnSchema) GetDefaultValue() any {
 	case "Map[string, boolean]":
 		return types.Map[string, bool]{}
 	case "Map[string, uuid]":
-		return types.Map[string, types.UUID]{}
+		return types.Map[string, types.UUIDType]{}
 	case "Map[boolean, integer]":
 		return types.Map[bool, int]{}
 	case "Map[boolean, real]":
@@ -211,17 +211,17 @@ func (cs *ColumnSchema) GetDefaultValue() any {
 	case "Map[boolean, boolean]":
 		return types.Map[bool, bool]{}
 	case "Map[boolean, uuid]":
-		return types.Map[bool, types.UUID]{}
+		return types.Map[bool, types.UUIDType]{}
 	case "Map[uuid, integer]":
-		return types.Map[types.UUID, int]{}
+		return types.Map[types.UUIDType, int]{}
 	case "Map[uuid, real]":
-		return types.Map[types.UUID, float64]{}
+		return types.Map[types.UUIDType, float64]{}
 	case "Map[uuid, string]":
-		return types.Map[types.UUID, string]{}
+		return types.Map[types.UUIDType, string]{}
 	case "Map[uuid, boolean]":
-		return types.Map[types.UUID, bool]{}
+		return types.Map[types.UUIDType, bool]{}
 	case "Map[uuid, uuid]":
-		return types.Map[types.UUID, types.UUID]{}
+		return types.Map[types.UUIDType, types.UUIDType]{}
 	default:
 		return nil
 	}

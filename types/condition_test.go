@@ -75,28 +75,28 @@ func TestCondition_MarshalJSON(t *testing.T) {
 
 	t.Run("Equal[UUID]", func(t *testing.T) {
 		c := Equal("x", UUID("my-uuid-1-2-3"))
-		require.IsType(t, &conditionImpl[UUID]{}, c, "incorrect type")
+		require.IsType(t, &conditionImpl[UUIDType]{}, c, "incorrect type")
 		data, err := json.Marshal(c)
 		require.NoError(t, err, "no error")
 		require.JSONEq(t, `["x", "==", ["uuid", "my-uuid-1-2-3"]]`, string(data), "incorrect JSON")
 	})
 	t.Run("Equal[NamedUUID]", func(t *testing.T) {
 		c := Equal("x", NamedUUID("my-uuid-1-2-3"))
-		require.IsType(t, &conditionImpl[NamedUUID]{}, c, "incorrect type")
+		require.IsType(t, &conditionImpl[UUIDType]{}, c, "incorrect type")
 		data, err := json.Marshal(c)
 		require.NoError(t, err, "no error")
 		require.JSONEq(t, `["x", "==", ["named-uuid", "my-uuid-1-2-3"]]`, string(data), "incorrect JSON")
 	})
 	t.Run("Equal[Set[UUID]]", func(t *testing.T) {
-		c := Equal("x", Set[UUID]{"my-uuid-1-2-3"})
-		require.IsType(t, &conditionImpl[Set[UUID]]{}, c, "incorrect type")
+		c := Equal("x", Set[UUIDType]{UUID("my-uuid-1-2-3")})
+		require.IsType(t, &conditionImpl[Set[UUIDType]]{}, c, "incorrect type")
 		data, err := json.Marshal(c)
 		require.NoError(t, err, "no error")
 		require.JSONEq(t, `["x", "==", ["uuid", "my-uuid-1-2-3"]]`, string(data), "incorrect JSON")
 	})
 	t.Run("Equal[Map[NamedUUID]]", func(t *testing.T) {
-		c := Equal("x", Map[NamedUUID, float64]{"my-uuid-1-2-3": 1.0})
-		require.IsType(t, &conditionImpl[Map[NamedUUID, float64]]{}, c, "incorrect type")
+		c := Equal("x", Map[UUIDType, float64]{NamedUUID("my-uuid-1-2-3"): 1.0})
+		require.IsType(t, &conditionImpl[Map[UUIDType, float64]]{}, c, "incorrect type")
 		data, err := json.Marshal(c)
 		require.NoError(t, err, "no error")
 		require.JSONEq(t, `["x", "==", ["map", [[["named-uuid", "my-uuid-1-2-3"], 1]] ] ]`, string(data), "incorrect JSON")
@@ -157,8 +157,8 @@ func Test_conditionImpl_Check(t *testing.T) {
 		},
 		{
 			name:  "Includes[Set[UUID]]",
-			cond:  Includes("x", Set[UUID]{"my-uuid-1-2-3"}),
-			value: Set[UUID]{"other-567", "my-uuid-1-2-3"},
+			cond:  Includes("x", Set[UUIDType]{UUID("my-uuid-1-2-3")}),
+			value: Set[UUIDType]{UUID("other-567"), UUID("my-uuid-1-2-3")},
 		},
 	}
 	for _, tt := range testsOK {

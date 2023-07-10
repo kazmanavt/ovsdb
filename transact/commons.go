@@ -11,9 +11,9 @@ type operation interface {
 }
 
 type Result struct {
-	Error   any         `json:"error,omitempty"`
-	Details any         `json:"details,omitempty"`
-	Uuid    types.UUID  `json:"uuid,omitempty"`
-	Rows    schema.Rows `json:"rows,omitempty"`
-	Count   int         `json:"count,omitempty"`
+	Error   any            `json:"error,omitempty"`
+	Details any            `json:"details,omitempty"`
+	Uuid    types.UUIDType `json:"uuid,omitempty"`
+	Rows    schema.Rows    `json:"rows,omitempty"`
+	Count   int            `json:"count,omitempty"`
 }
