@@ -55,8 +55,8 @@ func (u UUID) MarshalJSON() ([]byte, error) {
 	return b, nil
 }
 
-// GetNamedUUID returns the random generated UUIDv4 string with prefix "__"
-func GetNamedUUID() string {
+// NewNamedUUID returns the random generated UUIDv4 string with prefix "__"
+func NewNamedUUID() string {
 	field := make([]byte, 16)
 	r.Read(field[:])
 	// version 4

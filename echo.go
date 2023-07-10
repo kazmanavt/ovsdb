@@ -8,7 +8,7 @@ import (
 )
 
 func (c *Client) Echo(ctx context.Context) error {
-	UUID := types.GetNamedUUID()
+	UUID := types.NewNamedUUID()
 	result, err := c.Call(ctx, "echo", UUID)
 	if err != nil {
 		return err
