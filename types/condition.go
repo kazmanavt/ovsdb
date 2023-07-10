@@ -73,7 +73,7 @@ func (c *conditionImpl[T]) Check(value any) bool {
 		return checkComp(c.function, cvt, value)
 	case bool:
 		return checkComp(c.function, cvt, value)
-	case UUIDType:
+	case UUID:
 		return checkComp(c.function, cvt, value)
 	}
 	switch reflect.ValueOf(cv).Kind() {
@@ -154,7 +154,7 @@ func checkMap[T any](function string, cv T, value T) bool {
 	return false
 }
 
-func checkComp[T string | bool | UUIDType](function string, cv T, value any) bool {
+func checkComp[T string | bool | UUID](function string, cv T, value any) bool {
 	vt := value.(T)
 	switch function {
 	case "==", "includes":

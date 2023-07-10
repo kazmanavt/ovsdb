@@ -101,12 +101,20 @@ func (bt *BaseType) ValidateValue(v any, checkConstraints bool) error {
 			return validateEnumValue(typedVal, bt.Enum)
 		}
 		return nil
-	case types.UUIDType:
+	case types.UUID:
 		if bt.Type != "uuid" {
 			return fmt.Errorf("iexpect %s got UUID", bt.Type)
 		}
 		if bt.Enum != nil {
 			return validateEnumValue(typedVal, bt.Enum)
+		}
+		return nil
+	case types.NamedUUID:
+		if bt.Type != "uuid" {
+			return fmt.Errorf("iexpect %s got UUID", bt.Type)
+		}
+		if bt.Enum != nil {
+			return validateEnumValue(types.UUID(typedVal), bt.Enum)
 		}
 		return nil
 	}

@@ -43,6 +43,7 @@ var initialC []byte
 //go:embed testdata/updatesC1.json
 var updatesC1 []byte
 
+
 func Test_dbImpl_Update2(t *testing.T) {
 
 	var dSch schema.DbSchema
@@ -171,8 +172,8 @@ func Test_dbImpl_Update2(t *testing.T) {
 		require.NoError(t, err, "failed to initialA update")
 
 		eidsAny := Db.GetS("Bridge", uuid, "external_ids")
-		require.IsType(t, (types.Map[string, string])(nil), eidsAny, "external_ids not a Map[str,str]")
-		eids := eidsAny.(types.Map[string, string])
+		require.IsType(t, (types.Map[string,string])(nil), eidsAny, "external_ids not a Map[str,str]")
+		eids := eidsAny.(types.Map[string,string])
 		nOptsStr, ok := eids["umb_net_opts"]
 		require.True(t, ok, "missing umb_net_opts")
 		var nOpts map[string]any
@@ -186,8 +187,8 @@ func Test_dbImpl_Update2(t *testing.T) {
 		require.NoError(t, err, "failed to updatesA1")
 
 		eidsAny = Db.GetS("Bridge", uuid, "external_ids")
-		require.IsType(t, (types.Map[string, string])(nil), eidsAny, "external_ids not a Map[str,str]")
-		eids = eidsAny.(types.Map[string, string])
+		require.IsType(t, (types.Map[string,string])(nil), eidsAny, "external_ids not a Map[str,str]")
+		eids = eidsAny.(types.Map[string,string])
 		nOptsStr, ok = eids["umb_net_opts"]
 		require.True(t, ok, "missing umb_net_opts")
 		nOpts = make(map[string]any)

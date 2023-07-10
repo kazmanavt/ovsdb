@@ -1,8 +1,5 @@
 package types
 
-/*
-
-
 import (
 	"encoding/json"
 	"fmt"
@@ -44,4 +41,3 @@ func (u NamedUUID) MarshalJSON() ([]byte, error) {
 	b = append(b, `"]`...)
 	return b, nil
 }
-*/

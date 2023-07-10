@@ -68,13 +68,13 @@ func TestMap_MarshalJSON(t *testing.T) {
 		assert.Equal(t, m, m2, "incorrect marshaling map")
 	})
 	t.Run("marshal map[string]UUID with N elements", func(t *testing.T) {
-		m := Map[string, UUIDType]{
-			"foo": UUID("UUID-123"),
-			"bar": UUID("UUID-456"),
+		m := Map[string, UUID]{
+			"foo": "UUID-123",
+			"bar": "UUID-456",
 		}
 		data, err := json.Marshal(m)
 		assert.NoError(t, err)
-		m2 := Map[string, UUIDType]{}
+		m2 := Map[string, UUID]{}
 		err = json.Unmarshal(data, &m2)
 		assert.NoError(t, err)
 		assert.Equal(t, m, m2, "incorrect marshaling map")
@@ -90,8 +90,8 @@ func BenchmarkMap_UnmarshalJSON(b *testing.B) {
 	var (
 		mStringInt    = Map[string, int]{}
 		mStringString = Map[string, string]{}
-		mStringUUID   = Map[string, UUIDType]{}
-		mUUIDUUID     = Map[UUIDType, UUIDType]{}
+		mStringUUID   = Map[string, UUID]{}
+		mUUIDUUID     = Map[UUID, UUID]{}
 	)
 	for i := 0; i < 100; i++ {
 		mStringInt[fmt.Sprintf("foo-%d", rand.Int())] = rand.Int()
@@ -118,8 +118,8 @@ func BenchmarkMap_MarshalJSON(b *testing.B) {
 	var (
 		mStringInt    = Map[string, int]{}
 		mStringString = Map[string, string]{}
-		mStringUUID   = Map[string, UUIDType]{}
-		mUUIDUUID     = Map[UUIDType, UUIDType]{}
+		mStringUUID   = Map[string, UUID]{}
+		mUUIDUUID     = Map[UUID, UUID]{}
 	)
 	for i := 0; i < 100; i++ {
 		mStringInt[fmt.Sprintf("foo-%d", rand.Int())] = rand.Int()
