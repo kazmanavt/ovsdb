@@ -4,11 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/satori/go.uuid"
+	"github.com/kazmanavt/ovsdb/types"
 )
 
 func (c *Client) Echo(ctx context.Context) error {
-	UUID := uuid.NewV4().String()
+	UUID := types.GetNamedUUID()
 	result, err := c.Call(ctx, "echo", UUID)
 	if err != nil {
 		return err
