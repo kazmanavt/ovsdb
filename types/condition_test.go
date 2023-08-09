@@ -87,6 +87,13 @@ func TestCondition_MarshalJSON(t *testing.T) {
 		require.NoError(t, err, "no error")
 		require.JSONEq(t, `["x", "==", ["uuid", "my-uuid-1-2-3"]]`, string(data), "incorrect JSON")
 	})
+	t.Run("Equal[Set[UUID]] *named", func(t *testing.T) {
+		c := Equal("x", Set[UUID]{"__my-uuid-1-2-3"})
+		require.IsType(t, &conditionImpl[Set[UUID]]{}, c, "incorrect type")
+		data, err := json.Marshal(c)
+		require.NoError(t, err, "no error")
+		require.JSONEq(t, `["x", "==", ["named-uuid", "__my-uuid-1-2-3"]]`, string(data), "incorrect JSON")
+	})
 }
 
 func TestCondition_GetColumn(t *testing.T) {
