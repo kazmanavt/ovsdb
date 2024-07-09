@@ -32,11 +32,17 @@ type Transaction interface {
 	DecodeResult(result json.RawMessage) error
 	Result(idx int) *Result
 	Error() error
+	Clone() Transaction
 }
 type transaction struct {
 	sch    *schema.DbSchema
 	txnSet []operation
 	resp   []*Result
+}
+
+func (t *transaction) Clone() Transaction {
+	newT := *t
+	return &newT
 }
 
 func (t *transaction) Validate() error {
