@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/kazmanavt/jsonrpc v0.0.3
 	github.com/stretchr/testify v1.8.2
-	go.uber.org/zap v1.25.0
+	go.uber.org/zap v1.27.0
 )
 
 require (
