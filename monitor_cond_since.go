@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/kazmanavt/ovsdb/monitor"
-	"go.uber.org/zap"
+	"log/slog"
 )
 
 func (c *Client) MonitorCondSince(ctx context.Context, db string, monName string, since string, monReqs monitor.MonCondReqs) (*monitor.Updates3, <-chan monitor.Updates3, error) {
@@ -28,7 +28,7 @@ func (c *Client) MonitorCondSince(ctx context.Context, db string, monName string
 			parms := []interface{}{new(string), &upd.LastTxnID, &upd.Upd2}
 			err = json.Unmarshal(nParms, &parms)
 			if err != nil {
-				c.log.Errorw("fail to unmarshal updates", zap.Error(err))
+				c.log.Error("fail to unmarshal updates", slog.String("error", err.Error()))
 				continue
 			}
 			tuChan <- upd

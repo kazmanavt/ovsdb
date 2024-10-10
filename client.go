@@ -4,30 +4,32 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kazmanavt/jsonrpc"
-	"go.uber.org/zap"
+	"log/slog"
 	"sync"
 )
 
 type ClientConf struct {
-	Log  *zap.SugaredLogger
+	Log  *slog.Logger
 	Conn *jsonrpc.Connection
 	Net  string
 	Addr string
 }
 type Client struct {
 	*jsonrpc.Connection
-	log             *zap.SugaredLogger
+	log             *slog.Logger
 	updatesHandlers map[string]chan<- json.RawMessage
 	uhMu            sync.Mutex
 }
 
 func NewClient(conf ClientConf) (c *Client, err error) {
 	if conf.Log == nil {
-		conf.Log = zap.NewNop().Sugar()
+		conf.Log = slog.Default()
 	}
 	if conf.Conn == nil {
-		_jrpcLog := conf.Log.Named("JSON-RPC")
-		conf.Log.Debugw("creating new connection", zap.String("net", conf.Net), zap.String("addr", conf.Addr))
+		_jrpcLog := slog.Default().WithGroup("module:JSON-RPC")
+		conf.Log.Debug("creating new connection",
+			slog.String("net", conf.Net),
+			slog.String("addr", conf.Addr))
 		conf.Conn, err = jsonrpc.NewConnection(conf.Net, conf.Addr, _jrpcLog)
 		if err != nil {
 			return nil, err
@@ -62,7 +64,7 @@ func NewClient(conf ClientConf) (c *Client, err error) {
 }
 
 func (c *Client) echoHandler(req *jsonrpc.Response, respChan chan<- *jsonrpc.Response) {
-	c.log.Debugw("echo handler", zap.Any("server req.params", req.Params))
+	c.log.Debug("echo handler", slog.String("server req.params", string(req.Params)))
 	respChan <- &jsonrpc.Response{
 		ID:  req.ID,
 		Res: req.Params,
@@ -70,23 +72,23 @@ func (c *Client) echoHandler(req *jsonrpc.Response, respChan chan<- *jsonrpc.Res
 }
 
 func (c *Client) updatesDispatcher(msg []byte) {
-	c.log.Debugw("updates dispatcher")
+	c.log.Debug("updates dispatcher")
 	update := []any{new(string)}
 	err := json.Unmarshal(msg, &update)
 	if err != nil {
-		c.log.Errorw("fail to unmarshal update (phase 0)", zap.Error(err))
+		c.log.Error("fail to unmarshal update (phase 0)", slog.String("error", err.Error()))
 		return
 	}
 	id, ok := update[0].(*string)
 	if !ok {
-		c.log.Errorw("malformed update notification: fail to get id")
+		c.log.Error("malformed update notification: fail to get id")
 		return
 	}
 	c.uhMu.Lock()
 	handler, ok := c.updatesHandlers[*id]
 	defer c.uhMu.Unlock()
 	if !ok {
-		c.log.Warnw("no handler for update", zap.String("id", *id))
+		c.log.Warn("no handler for update", slog.String("id", *id))
 		return
 	}
 	select {

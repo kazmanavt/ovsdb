@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/kazmanavt/ovsdb/schema"
-	"go.uber.org/zap"
+	"log/slog"
 )
 
 func (c *Client) GetSchema(ctx context.Context, db string) (*schema.DbSchema, error) {
@@ -14,7 +14,7 @@ func (c *Client) GetSchema(ctx context.Context, db string) (*schema.DbSchema, er
 	}
 	var sch schema.DbSchema
 	if err := json.Unmarshal(result, &sch); err != nil {
-		c.log.Debugw("get schema: fail unmarshal response", zap.Error(err))
+		c.log.Debug("get schema: fail unmarshal response", slog.String("error", err.Error()))
 		return nil, err
 	}
 	return &sch, nil

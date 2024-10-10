@@ -3,7 +3,7 @@ package ovsdb
 import (
 	"context"
 	"encoding/json"
-	"go.uber.org/zap"
+	"log/slog"
 )
 
 func (c *Client) ListDbs(ctx context.Context) ([]string, error) {
@@ -14,7 +14,9 @@ func (c *Client) ListDbs(ctx context.Context) ([]string, error) {
 
 	var dbs []string
 	if err := json.Unmarshal(r, &dbs); err != nil {
-		c.log.Debugw("list dbs: fail unmarshal response", zap.Error(err), zap.Any("raw", r))
+		c.log.Debug("list dbs: fail unmarshal response",
+			slog.String("raw", string(r)),
+			slog.String("error", err.Error()))
 		return nil, err
 	}
 	return dbs, nil
