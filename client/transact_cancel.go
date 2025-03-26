@@ -1,11 +1,8 @@
-package ovsdb
+package client
 
 import "context"
 
 func (c *Client) CancelTransact(ctx context.Context, id string) error {
-	err := c.Notify(ctx, "cancel", id)
-	if err != nil {
-		c.DropPending(id)
-	}
+	err := c.jConn.Notify(ctx, "cancel", id)
 	return err
 }

@@ -1,28 +1,9 @@
 package monitor
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/kazmanavt/ovsdb/schema"
 )
-
-type GenericMonReqs interface {
-	json.Marshaler
-	json.Unmarshaler
-	HasInitial() bool
-	HasUpdates() bool
-	Validate() error
-}
-
-type MonReqs interface {
-	GenericMonReqs
-	Add(table string, req ...MonReq) MonReqs
-}
-
-type MonCondReqs interface {
-	GenericMonReqs
-	Add(table string, req ...MonCondReq) MonCondReqs
-}
 
 type req interface {
 	GetColumns() []string
@@ -61,7 +42,7 @@ func validateRequestSelect[T MonReq | MonCondReq](tReqs []T) error {
 	return nil
 }
 
-func validateRequestedColumns[T MonReq | MonCondReq](tSch *schema.TableSchema, tReqs []T) error {
+func validateRequestColumns[T MonReq | MonCondReq](tSch *schema.TableSchema, tReqs []T) error {
 	tName := tSch.Name
 	numReqs := len(tReqs)
 	colNames := make(map[string]int)

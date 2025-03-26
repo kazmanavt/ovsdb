@@ -1,4 +1,4 @@
-package ovsdb
+package client
 
 import (
 	"context"
@@ -13,11 +13,11 @@ func (c *Client) Transact(ctx context.Context, db string, tr transact.Transactio
 	for _, op := range tr.Operations() {
 		args = append(args, op)
 	}
-	result, err := c.Call(ctx, "transact", args...)
+	resp, err := c.jConn.Call(ctx, "transact", args...)
 	if err != nil {
 		return err
 	}
-	if err := tr.DecodeResult(result); err != nil {
+	if err := tr.DecodeResult(resp.Result()); err != nil {
 		return err
 	}
 	return tr.Error()

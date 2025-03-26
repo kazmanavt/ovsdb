@@ -67,7 +67,7 @@ func Test_monCondReqs_Add(t *testing.T) {
 
 	for _, test := range failTests {
 		t.Run("should fail", func(t *testing.T) {
-			reqs := NewMonCondReqs(&sch)
+			reqs := NewMonCondReqSet(&sch)
 			reqs.Add(test.tName, MonCondReq{Where: []types.Condition{test.cond}})
 			err = reqs.Validate()
 			assert.Error(t, err, test.msg)
@@ -112,7 +112,7 @@ func Test_monCondReqs_Add(t *testing.T) {
 	}
 	for _, test := range okTests {
 		t.Run("should succeed", func(t *testing.T) {
-			reqs := NewMonCondReqs(&sch)
+			reqs := NewMonCondReqSet(&sch)
 			reqs.Add(test.tName, MonCondReq{Where: []types.Condition{test.cond}})
 			err = reqs.Validate()
 			assert.NoError(t, err, test.msg)
@@ -126,7 +126,7 @@ func Test_monCondReqs_MarshalJSON(t *testing.T) {
 	err := sch.UnmarshalJSON(ovsSchema)
 	require.NoError(t, err, "fail to load schema")
 
-	reqs := NewMonCondReqs(&sch)
+	reqs := NewMonCondReqSet(&sch)
 	reqs.Add("Bridge",
 		MonCondReq{Columns: []string{"name", "ports"}, Where: []types.Condition{types.Equal("name", "br0")}, Select: &Select{Modify: true}},
 		MonCondReq{Columns: []string{"other_config"}, Where: []types.Condition{types.Excludes("external_ids", types.Map[string, string]{"key": "value"})}, Select: &Select{Initial: true}},

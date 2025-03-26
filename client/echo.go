@@ -1,4 +1,4 @@
-package ovsdb
+package client
 
 import (
 	"context"
@@ -9,17 +9,17 @@ import (
 
 func (c *Client) Echo(ctx context.Context) error {
 	UUID := types.NewNamedUUID()
-	result, err := c.Call(ctx, "echo", UUID)
+	resp, err := c.jConn.Call(ctx, "echo", UUID)
 	if err != nil {
 		return err
 	}
 	var expect []string
-	err = json.Unmarshal(result, &expect)
+	err = json.Unmarshal(resp.Result(), &expect)
 	if err != nil {
-		return fmt.Errorf("fail parse echo result: %v", result)
+		return fmt.Errorf("fail parse echo resp: %v", resp)
 	}
 	if len(expect) != 1 || expect[0] != UUID {
-		return fmt.Errorf("unexpected echo result: %v", expect)
+		return fmt.Errorf("unexpected echo resp: %v", expect)
 	}
 	return nil
 }
