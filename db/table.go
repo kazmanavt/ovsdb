@@ -29,7 +29,7 @@ func (t *tableImpl) findRecord(where []types.Condition) []string {
 }
 
 // apply updates
-func (t *tableImpl) update2(upd2 monitor.TableUpdate2) error {
+func (t *tableImpl) update2(upd2 monitor.RawTableUpdate2) error {
 	t.mu.Lock()
 	defer t.mu.Unlock()
 	for uuid, rowUpd2 := range upd2 {

@@ -3,7 +3,7 @@ module github.com/kazmanavt/ovsdb
 go 1.24.1
 
 require (
-	github.com/kazmanavt/jsonrpc v1.1.0
+	github.com/kazmanavt/jsonrpc v1.1.2
 	github.com/stretchr/testify v1.10.0
 )
 

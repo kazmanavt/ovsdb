@@ -57,6 +57,8 @@ func (c *Client) callMonitorCondSince(ctx context.Context, db string, monName, l
 }
 
 func (c *Client) SetMonitorCondSince(ctx context.Context, db string, monName string, monReqs monitor.MonCondReqSet) (monitor.TableSetUpdate2, <-chan monitor.TableSetUpdate2, error) {
+	c.monMu.Lock()
+	defer c.monMu.Unlock()
 
 	res, err := c.callMonitorCondSince(ctx, db, monName, types.ZeroUUID, monReqs)
 	if err != nil {
@@ -73,9 +75,7 @@ func (c *Client) SetMonitorCondSince(ctx context.Context, db string, monName str
 		updChan2:    tuChan,
 		updChan:     nil,
 	}
-	c.monMu.Lock()
 	c.monitors[monName] = &mon
-	c.monMu.Unlock()
 
 	return res.update2, tuChan, nil
 }

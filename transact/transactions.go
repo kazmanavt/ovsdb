@@ -2,6 +2,7 @@ package transact
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/kazmanavt/ovsdb/schema"
 	"github.com/kazmanavt/ovsdb/types"
@@ -85,7 +86,7 @@ func (t *transaction) Error() error {
 			if r.Details != nil {
 				errStr += fmt.Sprintf(" (%v)", r.Details)
 			}
-			return fmt.Errorf(errStr)
+			return errors.New(errStr)
 		}
 	}
 	return nil

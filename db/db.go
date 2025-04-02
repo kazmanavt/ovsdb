@@ -44,7 +44,7 @@ type DB interface {
 	FindRecord(tName string, wheres ...[]types.Condition) []string
 
 	// Update2 applies the updates2 received as result of monitor_cond or monitor_cond to current database.
-	Update2(upd2 monitor.TableSetUpdate2) error
+	Update2(upd2 monitor.RawTableSetUpdate2) error
 
 	SubscribeUpdates(uId string) <-chan struct{}
 	UnsubscribeUpdates(uId string)
@@ -186,7 +186,7 @@ func (d *dbImpl) FindRecord(tName string, wheres ...[]types.Condition) []string 
 	return []string{}
 }
 
-func (d *dbImpl) Update2(upd2 monitor.TableSetUpdate2) error {
+func (d *dbImpl) Update2(upd2 monitor.RawTableSetUpdate2) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 	defer func() {

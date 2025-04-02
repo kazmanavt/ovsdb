@@ -33,6 +33,7 @@ type Client struct {
 	jConn            jrpc.Connection
 	//ctx              context.Context
 	//cancel           context.CancelFunc
+	lock   sync.RWMutex
 	closed bool
 
 	monitors map[string]*monitorItem
@@ -125,6 +126,8 @@ func (c *Client) connect() {
 	c.log.Debug("creating new connection",
 		slog.String("net", c.network),
 		slog.String("addr", c.address))
+	ctx, cancel := context.WithCancel(context.TODO())
+	defer cancel()
 	for {
 		jConn, err := jrpc.NewClient(c.network, c.address, c.jLog)
 		if err != nil {
@@ -134,6 +137,7 @@ func (c *Client) connect() {
 		}
 		c.log.Debug("connected to server", slog.String("addr", c.network+"://"+c.address))
 
+		// setup handlers
 		if err := jConn.HandleCall("echo", c.echoHandler()); err != nil {
 			c.log.Warn("fail to setup call echo handler", slog.Any("error", err))
 			_ = jConn.Close()
@@ -159,6 +163,28 @@ func (c *Client) connect() {
 			c.monMu.RLock()
 			defer c.monMu.RUnlock()
 			c.jConn = jConn
+
+			_ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
+			defer cancel()
+
+			dbs, err := c.ListDbs(_ctx)
+			if err != nil {
+				c.log.Warn("fail to list dbs", slog.Any("error", err))
+				_ = jConn.Close()
+				return err
+			}
+			c.log.Debug("dbs listed")
+
+			for _, db := range dbs {
+				sch, err := c.GetSchema(_ctx, db)
+				if err != nil {
+					c.log.Warn("fail to get db schema", slog.String("dbName", db), slog.Any("error", err))
+					_ = jConn.Close()
+					return err
+				}
+				c.schemas[db] = sch
+			}
+
 			if err := c.restoreMonitors(); err != nil {
 				c.log.Warn("fail to restore monitors", slog.Any("error", err))
 				_ = jConn.Close()
@@ -219,8 +245,8 @@ func (c *Client) echoHandler() func(p json.RawMessage) (json.RawMessage, error) 
 	}
 }
 
-func (c *Client) updates3Dispatcher() func(string, string, rawTableSetUpdate2) {
-	return func(monName string, txnId string, _upd rawTableSetUpdate2) {
+func (c *Client) updates3Dispatcher() func(string, string, monitor.RawTableSetUpdate2) {
+	return func(monName string, txnId string, _upd monitor.RawTableSetUpdate2) {
 		c.log.Debug("updates3 dispatcher")
 		c.monMu.RLock()
 		item, ok := c.monitors[monName]
@@ -231,7 +257,15 @@ func (c *Client) updates3Dispatcher() func(string, string, rawTableSetUpdate2) {
 		}
 		item.lastTxnId = txnId
 
-		upd, err := c.tableSetUpdateFromRaw2(item.db, _upd)
+		c.schemasMu.RLock()
+		dSch, ok := c.schemas[item.db]
+		c.schemasMu.RUnlock()
+		if !ok {
+			c.log.Warn("updates3 dispatcher: db schema not found", slog.String("name", item.db))
+			return
+		}
+
+		upd, err := monitor.TableSetUpdateFromRaw2(dSch, _upd)
 		if err != nil {
 			c.log.Warn("updates3 dispatcher", slog.String("update error", err.Error()))
 			return
@@ -244,8 +278,8 @@ func (c *Client) updates3Dispatcher() func(string, string, rawTableSetUpdate2) {
 	}
 }
 
-func (c *Client) updates2Dispatcher() func(string, rawTableSetUpdate2) {
-	return func(monName string, _upd rawTableSetUpdate2) {
+func (c *Client) updates2Dispatcher() func(string, monitor.RawTableSetUpdate2) {
+	return func(monName string, _upd monitor.RawTableSetUpdate2) {
 		c.log.Debug("updates2 dispatcher")
 		c.monMu.RLock()
 		item, ok := c.monitors[monName]
@@ -255,7 +289,15 @@ func (c *Client) updates2Dispatcher() func(string, rawTableSetUpdate2) {
 			return
 		}
 
-		upd, err := c.tableSetUpdateFromRaw2(item.db, _upd)
+		c.schemasMu.RLock()
+		dSch, ok := c.schemas[item.db]
+		c.schemasMu.RUnlock()
+		if !ok {
+			c.log.Warn("updates2 dispatcher: db schema not found", slog.String("name", item.db))
+			return
+		}
+
+		upd, err := monitor.TableSetUpdateFromRaw2(dSch, _upd)
 		if err != nil {
 			c.log.Warn("updates2 dispatcher", slog.String("update error", err.Error()))
 			return
@@ -268,8 +310,8 @@ func (c *Client) updates2Dispatcher() func(string, rawTableSetUpdate2) {
 	}
 }
 
-func (c *Client) updatesDispatcher() func(string, rawTableSetUpdate) {
-	return func(monName string, _upd rawTableSetUpdate) {
+func (c *Client) updatesDispatcher() func(string, monitor.RawTableSetUpdate) {
+	return func(monName string, _upd monitor.RawTableSetUpdate) {
 		c.log.Debug("updates dispatcher")
 		c.monMu.RLock()
 		item, ok := c.monitors[monName]
@@ -278,8 +320,14 @@ func (c *Client) updatesDispatcher() func(string, rawTableSetUpdate) {
 			c.log.Warn("updates dispatcher", slog.String("monitor not found", monName))
 			return
 		}
-
-		upd, err := c.tableSetUpdateFromRaw(item.db, _upd)
+		c.schemasMu.RLock()
+		dSch, ok := c.schemas[item.db]
+		c.schemasMu.RUnlock()
+		if !ok {
+			c.log.Warn("updates dispatcher: db schema not found", slog.String("name", item.db))
+			return
+		}
+		upd, err := monitor.TableSetUpdateFromRaw(dSch, _upd)
 		if err != nil {
 			c.log.Warn("updates dispatcher", slog.String("update error", err.Error()))
 			return

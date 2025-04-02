@@ -52,7 +52,7 @@ func Test_dbImpl_Update2(t *testing.T) {
 	t.Run("A", func(t *testing.T) {
 		Db := NewDB(&dSch)
 
-		var ini, upd1, upd2 monitor.TableSetUpdate2
+		var ini, upd1, upd2 monitor.RawTableSetUpdate2
 		err = json.Unmarshal(initialA, &ini)
 		require.NoError(t, err, "failed to unmarshal initialA")
 		err = json.Unmarshal(updatesA1, &upd1)
@@ -71,7 +71,7 @@ func Test_dbImpl_Update2(t *testing.T) {
 	t.Run("B", func(t *testing.T) {
 		Db := NewDB(&dSch)
 
-		var ini, upd1, upd2, upd3, upd4 monitor.TableSetUpdate2
+		var ini, upd1, upd2, upd3, upd4 monitor.RawTableSetUpdate2
 		err = json.Unmarshal(initialB, &ini)
 		require.NoError(t, err, "failed to unmarshal initialB")
 		err = json.Unmarshal(updatesB1, &upd1)
@@ -160,7 +160,7 @@ func Test_dbImpl_Update2(t *testing.T) {
 	t.Run("C", func(t *testing.T) {
 		Db := NewDB(&dSch)
 
-		var ini, upd1 monitor.TableSetUpdate2
+		var ini, upd1 monitor.RawTableSetUpdate2
 		err = json.Unmarshal(initialC, &ini)
 		require.NoError(t, err, "failed to unmarshal initialA")
 		err = json.Unmarshal(updatesC1, &upd1)
