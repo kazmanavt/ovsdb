@@ -17,7 +17,7 @@ func (c *Client) Transact(ctx context.Context, db string, tr transact.Transactio
 	if err != nil {
 		return err
 	}
-	if err := tr.DecodeResult(resp.Result()); err != nil {
+	if err := tr.DecodeResult(resp.GetResult()); err != nil {
 		return err
 	}
 	return tr.Error()

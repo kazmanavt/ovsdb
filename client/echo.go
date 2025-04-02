@@ -14,7 +14,7 @@ func (c *Client) Echo(ctx context.Context) error {
 		return err
 	}
 	var expect []string
-	err = json.Unmarshal(resp.Result(), &expect)
+	err = json.Unmarshal(resp.GetResult(), &expect)
 	if err != nil {
 		return fmt.Errorf("fail parse echo resp: %v", resp)
 	}
