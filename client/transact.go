@@ -2,7 +2,7 @@ package client
 
 import (
 	"context"
-	"github.com/kazmanavt/ovsdb/transact"
+	"github.com/kazmanavt/ovsdb/v2/transact"
 )
 
 func (c *Client) Transact(ctx context.Context, db string, tr transact.Transaction) error {

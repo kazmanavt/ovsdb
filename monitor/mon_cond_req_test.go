@@ -1,8 +1,8 @@
 package monitor
 
 import (
-	"github.com/kazmanavt/ovsdb/schema"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/schema"
+	"github.com/kazmanavt/ovsdb/v2/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

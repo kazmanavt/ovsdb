@@ -3,7 +3,7 @@ package monitor
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kazmanavt/ovsdb/schema"
+	"github.com/kazmanavt/ovsdb/v2/schema"
 )
 
 type RawRowUpdate2 struct {

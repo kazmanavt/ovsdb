@@ -2,7 +2,7 @@ package schema
 
 import (
 	"fmt"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/types"
 	"reflect"
 	"strings"
 )

@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 	"encoding/json"
-	"github.com/kazmanavt/ovsdb/schema"
+	"github.com/kazmanavt/ovsdb/v2/schema"
 	"log/slog"
 )
 

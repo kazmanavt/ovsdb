@@ -1,8 +1,8 @@
 package transact
 
 import (
-	"github.com/kazmanavt/ovsdb/schema"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/schema"
+	"github.com/kazmanavt/ovsdb/v2/types"
 )
 
 type operation interface {

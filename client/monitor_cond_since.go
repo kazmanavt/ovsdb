@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/kazmanavt/ovsdb/monitor"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/monitor"
+	"github.com/kazmanavt/ovsdb/v2/types"
 )
 
 type m3Resp struct {

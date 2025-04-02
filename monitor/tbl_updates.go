@@ -1,7 +1,7 @@
 package monitor
 
 import (
-	"github.com/kazmanavt/ovsdb/schema"
+	"github.com/kazmanavt/ovsdb/v2/schema"
 )
 
 type RowUpdate struct {

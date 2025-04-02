@@ -1,7 +1,7 @@
 package monitor
 
 import (
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/types"
 )
 
 // MonCondReq is a request for monitoring a table.

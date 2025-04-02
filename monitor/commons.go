@@ -2,7 +2,7 @@ package monitor
 
 import (
 	"fmt"
-	"github.com/kazmanavt/ovsdb/schema"
+	"github.com/kazmanavt/ovsdb/v2/schema"
 )
 
 type req interface {

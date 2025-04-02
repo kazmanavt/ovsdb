@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/kazmanavt/ovsdb/monitor"
+	"github.com/kazmanavt/ovsdb/v2/monitor"
 )
 
 func u2FromJSON(c *Client, dbName string, data []byte) (monitor.TableSetUpdate2, error) {

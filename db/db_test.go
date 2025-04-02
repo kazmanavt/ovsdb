@@ -3,9 +3,9 @@ package db
 import (
 	_ "embed"
 	"encoding/json"
-	"github.com/kazmanavt/ovsdb/monitor"
-	"github.com/kazmanavt/ovsdb/schema"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/monitor"
+	"github.com/kazmanavt/ovsdb/v2/schema"
+	"github.com/kazmanavt/ovsdb/v2/types"
 	"github.com/stretchr/testify/require"
 	"testing"
 )

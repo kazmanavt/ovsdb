@@ -2,8 +2,8 @@ package transact
 
 import (
 	"fmt"
-	"github.com/kazmanavt/ovsdb/schema"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/schema"
+	"github.com/kazmanavt/ovsdb/v2/types"
 )
 
 type deleteOp struct {

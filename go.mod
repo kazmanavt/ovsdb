@@ -1,9 +1,9 @@
-module github.com/kazmanavt/ovsdb
+module github.com/kazmanavt/ovsdb/v2
 
 go 1.24.1
 
 require (
-	github.com/kazmanavt/jsonrpc v1.1.2
+	github.com/kazmanavt/jsonrpc/v2 v2.0.0
 	github.com/stretchr/testify v1.10.0
 )
 

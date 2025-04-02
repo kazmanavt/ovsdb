@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/kazmanavt/ovsdb/schema"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/schema"
+	"github.com/kazmanavt/ovsdb/v2/types"
 )
 
 func NewTransaction(sch *schema.DbSchema) Transaction {

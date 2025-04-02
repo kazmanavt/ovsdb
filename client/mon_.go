@@ -2,8 +2,8 @@ package client
 
 import (
 	"context"
-	jrpc "github.com/kazmanavt/jsonrpc/v1"
-	"github.com/kazmanavt/ovsdb/monitor"
+	jrpc "github.com/kazmanavt/jsonrpc/v2/jrpc1"
+	"github.com/kazmanavt/ovsdb/v2/monitor"
 )
 
 func (c *Client) _monitor(ctx context.Context, monMethod string, db string, monName string, since *string, monReqs monitor.GenericMonReqSet) (jrpc.Response, error) {

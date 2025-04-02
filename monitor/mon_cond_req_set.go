@@ -3,8 +3,8 @@ package monitor
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kazmanavt/ovsdb/schema"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/schema"
+	"github.com/kazmanavt/ovsdb/v2/types"
 )
 
 func NewMonCondReqSet(ds *schema.DbSchema) MonCondReqSet {

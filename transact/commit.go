@@ -1,6 +1,6 @@
 package transact
 
-import "github.com/kazmanavt/ovsdb/schema"
+import "github.com/kazmanavt/ovsdb/v2/schema"
 
 type commitOp struct {
 	Op      string `json:"op"`

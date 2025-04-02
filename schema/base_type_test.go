@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/types"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

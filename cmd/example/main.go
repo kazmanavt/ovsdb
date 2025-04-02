@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/kazmanavt/ovsdb/client"
-	"github.com/kazmanavt/ovsdb/monitor"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/client"
+	"github.com/kazmanavt/ovsdb/v2/monitor"
+	"github.com/kazmanavt/ovsdb/v2/types"
 	"log/slog"
 	"os"
 )

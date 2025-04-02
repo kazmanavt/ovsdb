@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/kazmanavt/ovsdb/monitor"
+	"github.com/kazmanavt/ovsdb/v2/monitor"
 )
 
 func fromJSON(c *Client, dbName string, data []byte) (monitor.TableSetUpdate, error) {
@@ -43,7 +43,7 @@ func (c *Client) callMonitor(ctx context.Context, db string, monName string, mon
 func (c *Client) SetMonitor(ctx context.Context, db string, monName string, monReqs monitor.MonReqSet) (monitor.TableSetUpdate, <-chan monitor.TableSetUpdate, error) {
 	c.monMu.Lock()
 	defer c.monMu.Unlock()
-	
+
 	upd, err := c.callMonitor(ctx, db, monName, monReqs)
 	if err != nil {
 		return nil, nil, err

@@ -3,7 +3,7 @@ package schema
 import (
 	_ "embed"
 	"encoding/json"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/types"
 	"github.com/stretchr/testify/require"
 	"testing"
 )

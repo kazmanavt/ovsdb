@@ -3,7 +3,7 @@ package monitor
 import (
 	_ "embed"
 	"encoding/json"
-	"github.com/kazmanavt/ovsdb/schema"
+	"github.com/kazmanavt/ovsdb/v2/schema"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

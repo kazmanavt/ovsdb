@@ -3,7 +3,7 @@ package schema
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kazmanavt/ovsdb/types"
+	"github.com/kazmanavt/ovsdb/v2/types"
 	"reflect"
 	"sync"
 )
