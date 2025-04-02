@@ -6,6 +6,7 @@ import (
 	"fmt"
 	jrpc "github.com/kazmanavt/jsonrpc/v1"
 	"github.com/kazmanavt/ovsdb/monitor"
+	"github.com/kazmanavt/ovsdb/schema"
 	"log/slog"
 	"sync"
 	"time"
@@ -37,6 +38,12 @@ type Client struct {
 	monitors map[string]*monitorItem
 	monMu    sync.RWMutex
 
+	schemas   map[string]*schema.DbSchema
+	schemasMu sync.RWMutex
+
+	dbsNames   []string
+	dbsNamesMu sync.RWMutex
+
 	keepAlivePeriod  time.Duration
 	keepAliveTimeout time.Duration
 }
@@ -48,6 +55,7 @@ func NewClient(network, addr string, opts ...ClientOpt) *Client {
 		log:              slog.Default(),
 		jLog:             slog.Default(),
 		monitors:         make(map[string]*monitorItem),
+		schemas:          make(map[string]*schema.DbSchema),
 		keepAlivePeriod:  defaultKeepAlivePeriod,
 		keepAliveTimeout: defaultKeepAliveTimeout,
 	}
@@ -76,25 +84,25 @@ func (c *Client) keepAlive() {
 				jConn.Close()
 				return
 			}
-			if resp.Error() != nil {
-				c.log.Warn("fail to send keep alive", slog.Any("remote error", resp.Error()))
+			if err := resp.Error(); err != nil {
+				c.log.Warn("fail to send keep alive", slog.Any("remote error", err.Error()))
 				jConn.Close()
 				return
 			}
 
 			var echoed []string
-			if err := json.Unmarshal(resp.Result(), &echoed); err != nil {
+			if err := json.Unmarshal(resp.GetResult(), &echoed); err != nil {
 				c.log.Warn("fail to send keep alive", slog.String("unmarshal error", err.Error()))
 				jConn.Close()
 				return
 			}
 			if len(echoed) != 1 {
-				c.log.Warn("fail to send keep alive", slog.String("unexpected response length", string(resp.Result())))
+				c.log.Warn("fail to send keep alive", slog.String("unexpected response length", string(resp.GetResult())))
 				jConn.Close()
 				return
 			}
 			if msg != echoed[0] {
-				c.log.Warn("fail to send keep alive", slog.String("unexpected response", string(resp.Result())))
+				c.log.Warn("fail to send keep alive", slog.String("unexpected response", string(resp.GetResult())))
 				jConn.Close()
 				return
 			}
@@ -133,6 +141,16 @@ func (c *Client) connect() {
 		}
 		if err = jConn.HandleNotification("update3", c.updates3Dispatcher()); err != nil {
 			c.log.Warn("fail to setup update3 handler", slog.Any("error", err))
+			_ = jConn.Close()
+			continue
+		}
+		if err = jConn.HandleNotification("update2", c.updates2Dispatcher()); err != nil {
+			c.log.Warn("fail to setup update2 handler", slog.Any("error", err))
+			_ = jConn.Close()
+			continue
+		}
+		if err = jConn.HandleNotification("update", c.updatesDispatcher()); err != nil {
+			c.log.Warn("fail to setup update handler", slog.Any("error", err))
 			_ = jConn.Close()
 			continue
 		}
@@ -201,8 +219,57 @@ func (c *Client) echoHandler() func(p json.RawMessage) (json.RawMessage, error) 
 	}
 }
 
-func (c *Client) updates3Dispatcher() func(string, string, monitor.TableSetUpdate2) {
-	return func(monName string, txnId string, upd monitor.TableSetUpdate2) {
+func (c *Client) updates3Dispatcher() func(string, string, rawTableSetUpdate2) {
+	return func(monName string, txnId string, _upd rawTableSetUpdate2) {
+		c.log.Debug("updates3 dispatcher")
+		c.monMu.RLock()
+		item, ok := c.monitors[monName]
+		c.monMu.RUnlock()
+		if !ok {
+			c.log.Warn("updates3 dispatcher", slog.String("monitor not found", monName))
+			return
+		}
+		item.lastTxnId = txnId
+
+		upd, err := c.tableSetUpdateFromRaw2(item.db, _upd)
+		if err != nil {
+			c.log.Warn("updates3 dispatcher", slog.String("update error", err.Error()))
+			return
+		}
+
+		select {
+		case item.updChan2 <- upd:
+		default:
+		}
+	}
+}
+
+func (c *Client) updates2Dispatcher() func(string, rawTableSetUpdate2) {
+	return func(monName string, _upd rawTableSetUpdate2) {
+		c.log.Debug("updates2 dispatcher")
+		c.monMu.RLock()
+		item, ok := c.monitors[monName]
+		c.monMu.RUnlock()
+		if !ok {
+			c.log.Warn("updates2 dispatcher", slog.String("monitor not found", monName))
+			return
+		}
+
+		upd, err := c.tableSetUpdateFromRaw2(item.db, _upd)
+		if err != nil {
+			c.log.Warn("updates2 dispatcher", slog.String("update error", err.Error()))
+			return
+		}
+
+		select {
+		case item.updChan2 <- upd:
+		default:
+		}
+	}
+}
+
+func (c *Client) updatesDispatcher() func(string, rawTableSetUpdate) {
+	return func(monName string, _upd rawTableSetUpdate) {
 		c.log.Debug("updates dispatcher")
 		c.monMu.RLock()
 		item, ok := c.monitors[monName]
@@ -211,9 +278,15 @@ func (c *Client) updates3Dispatcher() func(string, string, monitor.TableSetUpdat
 			c.log.Warn("updates dispatcher", slog.String("monitor not found", monName))
 			return
 		}
-		item.lastTxnId = txnId
+
+		upd, err := c.tableSetUpdateFromRaw(item.db, _upd)
+		if err != nil {
+			c.log.Warn("updates dispatcher", slog.String("update error", err.Error()))
+			return
+		}
+
 		select {
-		case item.updChan2 <- upd:
+		case item.updChan <- upd:
 		default:
 		}
 	}

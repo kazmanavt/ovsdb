@@ -15,7 +15,7 @@ type m3Resp struct {
 	update2   monitor.TableSetUpdate2
 }
 
-func (m3r *m3Resp) UnmarshalJSON(data []byte) error {
+func (m3r *m3Resp) fromJSON(c *Client, dbName string, data []byte) error {
 	var params []json.RawMessage
 	if err := json.Unmarshal(data, &params); err != nil {
 		return err
@@ -29,11 +29,11 @@ func (m3r *m3Resp) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(params[1], &m3r.lastTxnID); err != nil {
 		return fmt.Errorf("unmarshal lastTxnID: %w", err)
 	}
-	var upd2 monitor.TableSetUpdate2 = make(map[string]monitor.TableUpdate2)
-	if err := json.Unmarshal(params[2], &upd2); err != nil {
+	var err error
+	m3r.update2, err = u2FromJSON(c, dbName, params[2])
+	if err != nil {
 		return fmt.Errorf("unmarshal update2: %w", err)
 	}
-	m3r.update2 = upd2
 	return nil
 }
 
@@ -43,12 +43,12 @@ func (c *Client) callMonitorCondSince(ctx context.Context, db string, monName, l
 		return m3Resp{}, err
 	}
 
-	if resp.Error() != nil {
-		return m3Resp{}, fmt.Errorf("monitor_cond_since: %s", resp.Error())
+	if err := resp.Error(); err != nil {
+		return m3Resp{}, fmt.Errorf("monitor_cond_since: %w", err)
 	}
 
 	var res m3Resp
-	err = json.Unmarshal(resp.Result(), &res)
+	err = res.fromJSON(c, db, resp.GetResult())
 	if err != nil {
 		return m3Resp{}, err
 	}

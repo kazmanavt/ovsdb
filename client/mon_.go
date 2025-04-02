@@ -21,5 +21,9 @@ func (c *Client) _monitor(ctx context.Context, monMethod string, db string, monN
 		return nil, err
 	}
 
+	if err := resp.Error(); err != nil {
+		return nil, err
+	}
+
 	return resp, nil
 }
